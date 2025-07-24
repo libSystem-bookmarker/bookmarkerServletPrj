@@ -1,0 +1,9 @@
+# CREATE TABLE
+
+# INSERT
+
+# SELECT
+
+# UPDATE
+
+# DELETE
