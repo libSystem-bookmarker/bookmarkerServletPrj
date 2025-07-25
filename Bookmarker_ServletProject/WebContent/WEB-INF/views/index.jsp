@@ -8,6 +8,9 @@
 </head>
 <body>
 <h1>index.jsp</h1>
+<ul>
+<li><a href="insertMemberForm.do">회원가입</a>
+</ul>
 <h1>main</h1>
 </body>
 </html>
