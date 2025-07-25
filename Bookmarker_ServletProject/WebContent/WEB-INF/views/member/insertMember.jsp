@@ -16,7 +16,7 @@
 </c:if>
 <c:url var = "member_do" value="/insertMember.do" />
 <form action="${member_do}" method="post">
-    <label for="role">역할:</label>
+    <label for="role">역할 (학생/사서):</label>
     <select name="role" id="role" required>
         <option value="student">학생</option>
         <option value="librarian">사서</option>

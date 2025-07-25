@@ -29,6 +29,22 @@ public class AdminMemberService {
 	        return false;
 	    }
 	}
+	
+	public boolean updateMemberAdmin (MemberVO member) {
+	    boolean isStudentWithUnit = member.getUnitId() != 0 && "student".equals(member.getRole());
+	    boolean isLibrarianWithoutUnit = member.getUnitId() == 0 && "librarian".equals(member.getRole());
+
+	    System.out.println("회원 수정 조건 확인: " + member);
+
+	    if (isStudentWithUnit || isLibrarianWithoutUnit) {
+	        int result = adminMemberDAO.updateMemberAdmin(member);
+	        System.out.println("update 결과: " + result);
+	        return result > 0;
+	    } else {
+	        System.out.println("조건 불충족으로 수정 실패");
+	        return false;
+	    }
+	}
 
 
 }
