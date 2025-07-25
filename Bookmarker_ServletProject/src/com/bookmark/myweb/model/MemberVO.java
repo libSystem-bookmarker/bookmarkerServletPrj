@@ -19,5 +19,5 @@ public class MemberVO {
 	private String address; //address
 	private String email; //email
 	private int unitId; //fk
-	private Date createAt;
+	private Date createdAt;
 }

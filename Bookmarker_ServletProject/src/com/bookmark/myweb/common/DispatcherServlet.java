@@ -56,7 +56,7 @@ public class DispatcherServlet extends HttpServlet {
 	private void processServlet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String command = request.getRequestURI(); // 요청 URI 반환
+		String command = request.getRequestURI().substring(request.getContextPath().length());
 		CommandController controller = commandControllerMap.get(command); // uri 를 이용해 맵으로부터 커맨드 핸들러 객체 찾음
 
 		if (controller == null) {
@@ -68,7 +68,7 @@ public class DispatcherServlet extends HttpServlet {
 		try {// process는 명령을 처리하고 뷰 페이지 반환
 			viewPage = controller.process(request, response);
 			if ((viewPage != null) && (viewPage.indexOf("redirect:") == 0)) { // 뷰 이름 앞에 리다이렉트가 붙으면 리다이렉트
-				viewPage = viewPage.substring(9); // 9는 reidrect의 길이
+				viewPage = viewPage.substring(9); // 9는 redirect의 길이
 				response.sendRedirect(request.getContextPath() + viewPage);
 				return;
 			}
@@ -77,7 +77,7 @@ public class DispatcherServlet extends HttpServlet {
 		}
 
 		if (viewPage != null) { // 뷰로 포워드
-			viewPage = "/WEB-INF/views/" + viewPage;
+			viewPage = "/WEB-INF/views/" + viewPage + ".jsp";
 		} else {
 			viewPage = "/WEB-INF/views/index.jsp";
 		}

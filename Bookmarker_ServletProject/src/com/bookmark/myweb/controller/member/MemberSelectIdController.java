@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.bookmark.myweb.common.CommandController;
 
-public class MemberSelectController implements CommandController {
+public class MemberSelectIdController implements CommandController {
 
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response) {

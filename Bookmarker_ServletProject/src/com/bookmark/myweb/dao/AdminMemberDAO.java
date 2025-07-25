@@ -2,7 +2,10 @@ package com.bookmark.myweb.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -52,7 +55,7 @@ public class AdminMemberDAO {
 			} else {
 				pstmt.setInt(6, member.getUnitId());
 			}
-			pstmt.setDate(7, new java.sql.Date(member.getCreateAt().getTime())); // 7번 위치
+			pstmt.setDate(7, new java.sql.Date(member.getCreatedAt().getTime())); // 7번 위치
 
 			rowCount = pstmt.executeUpdate();
 
@@ -73,9 +76,8 @@ public class AdminMemberDAO {
 		return rowCount;
 	}
 
-	// update
 	/**
-	 * @author y.kim
+	 * @author ys.kim
 	 * @param member
 	 * @return
 	 * 회원 정보 수정 기능 - 관리자 용
@@ -96,11 +98,84 @@ public class AdminMemberDAO {
 			result = pstmt.executeUpdate();
 
 		} catch (SQLException e) {
-			System.out.println("updateMember exception: " + e.getMessage());
+			System.out.println("updateMemberAdmin exception: " + e.getMessage());
 			throw new RuntimeException();
 		}
 
 		return result;
 	}
+	
+	/**
+	 * @author ys.kim
+	 * @return
+	 * 회원 전체 리스트
+	 */
+	public List<MemberVO> selectAllMembers () {
+		//ser_id, pw, role, name, phone_number, address, email, unit_id, created_at
+		List <MemberVO> memberListAll = new ArrayList<>();
+		String sql = "SELECT user_id AS userId, pw AS pw, role AS role, name AS name, " +
+	             "phone_number AS phoneNumber, address AS address, email AS email, " +
+	             "unit_id AS unitId, created_at AS createdAt FROM member";
 
+		try (Connection con = dataSource.getConnection();
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();){
+			while(rs.next()) {
+	            MemberVO vo = extractMemberFromResultSet(rs);
+	            memberListAll.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("selectAllMembers exception: " + e.getMessage());
+			throw new RuntimeException();
+		}
+		
+		return memberListAll;
+	}
+	
+	/**
+	 * @author ys.kim
+	 * @param role
+	 * @return
+	 * role 카테고리에 따라 회원 목록 출력
+	 */
+	public List<MemberVO> selectRoleMembers(String role) {
+		List <MemberVO> memberRoleList = new ArrayList<>();
+		String sql = "SELECT user_id AS userId, pw AS pw, role AS role, name AS name, " +
+	             "phone_number AS phoneNumber, address AS address, email AS email, " +
+	             "unit_id AS unitId, created_at AS createdAt FROM member WHERE role = ?";
+		try (Connection con = dataSource.getConnection();
+			PreparedStatement pstmt = con.prepareStatement(sql);) {
+			pstmt.setString(1, role);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				 MemberVO vo = extractMemberFromResultSet(rs);
+				 memberRoleList.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("selectRoleMembers exception: " + e.getMessage());
+			throw new RuntimeException();
+		}
+		return memberRoleList; 
+	}
+	
+	
+	/**
+	 * @author ys.kim
+	 * @param rs
+	 * @return
+	 * @throws SQLException
+	 */
+	private MemberVO extractMemberFromResultSet(ResultSet rs) throws SQLException {
+		MemberVO member = new MemberVO();
+	    member.setUserId(rs.getInt("userId"));
+	    member.setPw(rs.getString("pw"));
+	    member.setRole(rs.getString("role"));
+	    member.setName(rs.getString("name"));
+	    member.setPhoneNumber(rs.getString("phoneNumber"));
+	    member.setAddress(rs.getString("address"));
+	    member.setEmail(rs.getString("email"));
+	    member.setUnitId(rs.getInt("unitId"));
+	    member.setCreatedAt(rs.getDate("createdAt"));
+	    return member;
+	}
 }

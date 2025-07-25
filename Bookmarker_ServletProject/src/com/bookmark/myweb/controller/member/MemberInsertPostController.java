@@ -32,7 +32,7 @@ public class MemberInsertPostController implements CommandController {
 		member.setAddress(address);
 		member.setEmail(email);
 		member.setUnitId(unitId == null || unitId.isEmpty() ? 0 : Integer.parseInt(unitId));
-		member.setCreateAt(new java.sql.Date(System.currentTimeMillis()));
+		member.setCreatedAt(new java.sql.Date(System.currentTimeMillis()));
 
 		boolean result = adminMemberService.insertMember(member);
 
