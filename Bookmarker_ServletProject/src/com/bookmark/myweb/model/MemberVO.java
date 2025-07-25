@@ -17,6 +17,7 @@ public class MemberVO {
 	private String name; //name
 	private String phoneNumber; //phone
 	private String address; //address
+	private String email; //email
 	private int unitId; //fk
 	private Date createAt;
 }
