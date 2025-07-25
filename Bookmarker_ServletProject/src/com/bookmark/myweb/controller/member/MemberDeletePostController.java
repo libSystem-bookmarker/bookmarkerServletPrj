@@ -2,15 +2,33 @@ package com.bookmark.myweb.controller.member;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.bookmark.myweb.common.CommandController;
+import com.bookmark.myweb.dao.AdminMemberDAO;
 
 public class MemberDeletePostController implements CommandController {
 
-	@Override
-	public String process(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    AdminMemberDAO dao = new AdminMemberDAO();
 
+    @Override
+    public String process(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        String userid = (String) session.getAttribute("userid");
+
+        if (userid != null) {
+            String password = request.getParameter("password");
+            String dbpw = dao.getPassword(userid);  // DB에서 비밀번호 조회
+
+            if (dbpw != null && dbpw.equals(password)) {
+                dao.deleteMember(userid);   // DB에서 회원 삭제
+                session.invalidate();       // 세션 무효화
+                return "redirect:/";        // 메인으로 리다이렉트
+            } else {
+                throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+            }
+        } else {
+            throw new RuntimeException("로그인된 사용자만 탈퇴할 수 있습니다.");
+        }
+    }
 }

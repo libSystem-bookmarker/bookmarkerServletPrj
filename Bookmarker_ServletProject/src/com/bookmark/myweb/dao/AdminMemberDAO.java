@@ -76,4 +76,66 @@ public class AdminMemberDAO {
 		return rowCount;
 	}
 
+	
+	public String getPassword(String userid) {
+	    String dbpw = null;
+	    Connection con = null;
+	    PreparedStatement pstmt = null;
+	    java.sql.ResultSet rs = null;
+
+	    try {
+	        con = dataSource.getConnection();
+
+	        String sql = "SELECT pw FROM MEMBER WHERE user_id = ?";
+	        pstmt = con.prepareStatement(sql);
+	        pstmt.setString(1, userid);
+
+	        rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	            dbpw = rs.getString("pw");
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        throw new RuntimeException("비밀번호 조회 중 오류 발생");
+	    } finally {
+	        try {
+	            if (rs != null) rs.close();
+	            if (pstmt != null) pstmt.close();
+	            if (con != null) con.close();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    return dbpw;
+	}
+	public int deleteMember(String userid) {
+	    Connection con = null;
+	    PreparedStatement pstmt = null;
+	    int result = 0;
+
+	    try {
+	        con = dataSource.getConnection();
+	        String sql = "DELETE FROM MEMBER WHERE user_id = ?";
+	        pstmt = con.prepareStatement(sql);
+	        pstmt.setString(1, userid);
+	        result = pstmt.executeUpdate();
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        throw new RuntimeException("회원 삭제 중 오류 발생");
+	    } finally {
+	        try {
+	            if (pstmt != null) pstmt.close();
+	            if (con != null) con.close();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    return result;
+	}
+	
 }
