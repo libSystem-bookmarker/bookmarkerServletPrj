@@ -26,7 +26,7 @@ public class BookSelectController implements CommandController {
 			request.setAttribute("message", "등록된 도서가 없습니다.");
 		}
 		
-		return "librarian/selectBook.jsp";
+		return "librarian/selectBooks.jsp";
 	}
 
 }

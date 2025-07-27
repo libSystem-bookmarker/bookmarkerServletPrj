@@ -1,4 +1,25 @@
-# CREATE TABLE
+# CREATE VIEW
+CREATE VIEW book_with_category_view AS
+SELECT 
+    b.book_id,
+    b.category_id,
+    c.name AS category_name,
+    b.title,
+    b.author,
+    b.publisher,
+    b.total_count,
+    b.create_at
+FROM 
+    book b
+JOIN 
+    category c ON b.category_id = c.category_id;
+    
+commit;
+
+select * from book_with_category_view;
+
+
+
 
 # INSERT
 

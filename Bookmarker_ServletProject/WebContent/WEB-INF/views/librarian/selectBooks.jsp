@@ -19,16 +19,19 @@
  --%>	</c:if>
  
  	<c:forEach var="book" items="${books}">
- 		<div class="card">
+ 		<div class="card" style="border: 1px solid black">
+ 		<a href="/insertBookform.do?bookId=${book.bookId}">
  			<div>${book.bookId}</div>
             <div>${book.categoryName}</div>
             <div>${book.title}</div>
             <div>${book.author}</div>
             <div>${book.publisher}</div>
             <div>${book.totalCount}</div>
-<%--             <div>${book.createAt}</div>
- --%>            
- 		
+			<div>
+			    출판일: <fmt:formatDate value="${book.createAt}" pattern="yyyy.MM.dd" />
+			</div>
+  
+ 		</a>
  		</div>
  	</c:forEach>
  
