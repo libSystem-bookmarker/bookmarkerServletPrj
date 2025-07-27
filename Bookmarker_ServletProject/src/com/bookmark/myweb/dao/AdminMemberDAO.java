@@ -11,6 +11,14 @@ import javax.sql.DataSource;
 
 import com.bookmark.myweb.model.MemberVO;
 
+/**
+ * @author kosa
+ *
+ */
+/**
+ * @author kosa
+ *
+ */
 public class AdminMemberDAO {
 
 	static DataSource dataSource;
@@ -25,10 +33,10 @@ public class AdminMemberDAO {
 	}
 
 	/**
-	 * @author ys.kim
-	 * @param member
-	 * @return
-	 * INSERT MEMBER
+	 * @author yskim
+	 * @param insert member
+	 * @return 
+	 * 
 	 */
 	public int insertMember(MemberVO member) {
 		Connection con = null;
@@ -75,7 +83,12 @@ public class AdminMemberDAO {
 
 		return rowCount;
 	}
-
+	/**
+	 * @author bs.kim
+	 * @param userid - 사용자의 ID
+	 * @return 해당 사용자의 비밀번호
+	 * 데이터베이스에서 특정 사용자 ID에 해당하는 비밀번호를 조회
+	 */
 	
 	public String getPassword(String userid) {
 	    String dbpw = null;
@@ -111,6 +124,13 @@ public class AdminMemberDAO {
 
 	    return dbpw;
 	}
+	
+	/**
+	 * @author bs.kim
+	 * @param userid - 삭제할 사용자 ID
+	 * @return 삭제된 행의 수 (1이면 삭제 성공)
+	 * 데이터베이스에서 특정 사용자 ID에 해당하는 회원 정보를 삭제
+	 */
 	public int deleteMember(String userid) {
 	    Connection con = null;
 	    PreparedStatement pstmt = null;
