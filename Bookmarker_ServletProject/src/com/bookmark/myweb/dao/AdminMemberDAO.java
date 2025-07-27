@@ -178,4 +178,29 @@ public class AdminMemberDAO {
 	    member.setCreatedAt(rs.getDate("createdAt"));
 	    return member;
 	}
+
+	/**
+	 * @author ys.kim
+	 * @param userid
+	 * @return
+	 * 비밀번호 확인 -> 정보 수정 시
+	 * 
+	 */
+	public String getPassword(String userid) {
+		String sql = "SELECT pw FROM member WHERE user_id = ?";
+		try (Connection con = dataSource.getConnection();
+			PreparedStatement pstmt = con.prepareStatement(sql);) {
+			pstmt.setInt(1, Integer.parseInt(userid));
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getString("pw"); //pw 컬럼 값 반환
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("get pw error message: "+e.getMessage());
+			throw new RuntimeException(e);
+		}
+		
+		return null; //조회된 결과 없을 때
+	}
 }
