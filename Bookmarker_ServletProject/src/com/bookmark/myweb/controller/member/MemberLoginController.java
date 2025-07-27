@@ -9,6 +9,11 @@ import com.bookmark.myweb.common.CommandController;
 
 // 예시 LoginController 내부
 public class MemberLoginController implements CommandController {
+	public MemberLoginController() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * 로그인 처리 컨트롤러
 	 * 

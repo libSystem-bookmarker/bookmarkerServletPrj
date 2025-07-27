@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+                             http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" 
+         id="WebApp_ID" version="4.0">
+
   <display-name>Bookmarker_ServletProject</display-name>
+
   <welcome-file-list>
     <welcome-file>home.do</welcome-file>
   </welcome-file-list>
+
   <filter>
     <filter-name>CharacterEncodingFilter</filter-name>
     <filter-class>com.bookmark.myweb.common.CharacterEncodingFilter</filter-class>
@@ -12,30 +19,41 @@
       <param-value>utf-8</param-value>
     </init-param>
   </filter>
-  
-  <servlet>
-  	<servlet-name>DispatcherServlet</servlet-name>
-  	<servlet-class>com.bookmark.myweb.common.DispatcherServlet</servlet-class>
-  	<init-param>
-  		<param-name>configFile</param-name>
-  		<param-value>/WEB-INF/command.properties</param-value>
-  	</init-param>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>DispatcherServlet</servlet-name>
-  	<url-pattern>*.do</url-pattern>
-  </servlet-mapping>
-  
+
   <filter-mapping>
     <filter-name>CharacterEncodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+
+  <servlet>
+    <servlet-name>DispatcherServlet</servlet-name>
+    <servlet-class>com.bookmark.myweb.common.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>configFile</param-name>
+      <param-value>/WEB-INF/command.properties</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>DispatcherServlet</servlet-name>
+    <url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+
+  <resource-ref>
+    <description>Oracle DataSource</description>
+    <res-ref-name>jdbc/Oracle</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+    <res-auth>Container</res-auth>
+  </resource-ref>
+
   <error-page>
     <exception-type>java.lang.RuntimeException</exception-type>
     <location>/WEB-INF/views/error/runtime.jsp</location>
   </error-page>
+
   <error-page>
     <error-code>404</error-code>
     <location>/WEB-INF/views/error/error404.jsp</location>
   </error-page>
+
 </web-app>

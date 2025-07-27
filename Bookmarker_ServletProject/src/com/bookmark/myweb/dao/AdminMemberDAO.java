@@ -203,4 +203,24 @@ public class AdminMemberDAO {
 		
 		return null; //조회된 결과 없을 때
 	}
+	
+	/**
+	 * @author bskim
+	 * @param userid (삭제할 회원의 ID)
+	 * @return 삭제 성공 시 1, 실패 시 0
+	 * 관리자에 의한 회원 삭제 기능
+	 */
+	public int deleteMember(String userid) {
+	    String sql = "DELETE FROM member WHERE user_id = ?";
+	    try (Connection con = dataSource.getConnection();
+	         PreparedStatement pstmt = con.prepareStatement(sql)) {
+	        
+	        pstmt.setInt(1, Integer.parseInt(userid));
+	        return pstmt.executeUpdate(); // 삭제 성공: 1, 실패: 0
+	    } catch (SQLException e) {
+	        System.out.println("deleteMember 예외 발생: " + e.getMessage());
+	        throw new RuntimeException(e);
+	    }
+	}
+
 }
