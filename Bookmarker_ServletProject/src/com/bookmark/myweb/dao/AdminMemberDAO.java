@@ -129,7 +129,7 @@ public class AdminMemberDAO {
 	 * @author bs.kim
 	 * @param userid - 삭제할 사용자 ID
 	 * @return 삭제된 행의 수 (1이면 삭제 성공)
-	 * 데이터베이스에서 특정 사용자 ID에 해당하는 회원 정보를 삭제
+	 * 데이터베이스에서 특정 사용자 ID에 해당하는 회원 정보를 삭제한다.
 	 */
 	public int deleteMember(String userid) {
 	    Connection con = null;

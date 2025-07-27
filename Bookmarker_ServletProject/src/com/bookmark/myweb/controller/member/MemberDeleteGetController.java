@@ -14,7 +14,7 @@ public class MemberDeleteGetController implements CommandController {
 	 * 로그인 상태가 아니라면 로그인 페이지로 리다이렉트한다.
 	 * 
 	 * @author bs.kim
-	 * @return passwordform.jsp 또는 loginForm.jsp로 포워딩
+	 * @return passwordform.jsp 또는 loginForm.jsp로 포워딩한다.
 	 */
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) {

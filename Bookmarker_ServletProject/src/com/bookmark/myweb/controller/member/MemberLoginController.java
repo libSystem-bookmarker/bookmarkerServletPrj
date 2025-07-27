@@ -17,7 +17,7 @@ public class MemberLoginController implements CommandController {
 	 * 로그인 실패 시 로그인 폼으로 이동하며 실패 메시지를 전달한다.
 	 * 
 	 * @author bs.kim
-	 * @return 로그인 성공 시 main.jsp, 실패 시 loginForm.jsp로 포워딩
+	 * @return 로그인 성공 시 main.jsp, 실패 시 loginForm.jsp로 포워딩한다..
 	 */
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) {

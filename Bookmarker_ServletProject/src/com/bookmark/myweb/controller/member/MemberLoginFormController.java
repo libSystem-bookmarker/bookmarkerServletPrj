@@ -12,7 +12,7 @@ public class MemberLoginFormController implements CommandController {
 	 * 로그인 폼 페이지로 이동시켜 사용자에게 아이디/비밀번호 입력을 받도록 한다.
 	 * 
 	 * @author bs.kim
-	 * @return loginForm.jsp로 포워딩
+	 * @return loginForm.jsp로 포워딩한다..
 	 */
     public String process(HttpServletRequest request, HttpServletResponse response) {
     	return "common/loginForm.jsp";

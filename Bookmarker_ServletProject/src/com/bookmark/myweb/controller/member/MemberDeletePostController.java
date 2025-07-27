@@ -12,7 +12,7 @@ public class MemberDeletePostController implements CommandController {
 	 * 회원 탈퇴 처리(POST 방식)에 대한 컨트롤러
 	 * 
 	 * 사용자가 입력한 비밀번호가 DB와 일치하면 회원 탈퇴 처리 및 세션 종료 후 메인으로 이동.
-	 * 비밀번호가 일치하지 않으면 예외 발생.
+	 * 비밀번호가 일치하지 않으면 예외 발생한다.
 	 * 로그인하지 않은 경우도 예외 처리.
 	 * 
 	 * @author bs.kim
