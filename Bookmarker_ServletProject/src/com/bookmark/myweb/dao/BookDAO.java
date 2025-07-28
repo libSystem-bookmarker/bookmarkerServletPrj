@@ -32,6 +32,35 @@ public class BookDAO {
 	
 	
 	
+	/**
+	 * 도서 삭제
+	 * bookId에 해당하는 도서 삭제
+	 * @param bookId
+	 */
+	public int deleteBookById(int bookId) {
+
+	    String sql = "DELETE FROM book WHERE book_id = ?";
+
+	    try (
+		        Connection con = dataSource.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);	
+	    	){
+
+	        stmt.setInt(1, bookId);
+	        int deletedRow = stmt.executeUpdate();
+	        
+	        return deletedRow;
+	        
+
+	    } catch (SQLException e) {
+	        throw new RuntimeException("도서 삭제 중 오류 발생", e);
+
+	    }
+	}
+
+	
+	
+	
 	
 	/**
 	 * 도서 수정

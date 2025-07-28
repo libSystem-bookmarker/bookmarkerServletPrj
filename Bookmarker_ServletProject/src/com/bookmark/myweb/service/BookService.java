@@ -14,6 +14,17 @@ public class BookService {
 	
 	
 	
+	public void deleteBookById(int bookId) {
+		
+		int deletedRow = dao.deleteBookById(bookId);
+		
+        if (deletedRow <= 0) {
+        	throw new RuntimeException("❌ 해당 ID의 도서를 찾을 수 없습니다.");
+        }
+	}
+	
+	
+	
 	public void insertBook(BookVO book) {
       try {
             int result = dao.insertBook(book);

@@ -10,7 +10,6 @@ public class CategoryVO {
 	
 	
 	public CategoryVO(int categoryId, String name) {
-		super();
 		this.categoryId = categoryId;
 		this.name = name;
 	}
