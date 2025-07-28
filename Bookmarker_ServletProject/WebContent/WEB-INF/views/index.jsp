@@ -1,18 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
+<link href="https://hangeul.pstatic.net/hangeul_static/css/maru-buri.css" rel="stylesheet">
+<link rel="stylesheet" href="/resources/css/common/common.css">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>BOOKMARK</title>
 </head>
 <body>
-<h1>index.jsp</h1>
-<ul>
-<li><a href="insertMemberForm.do">회원가입</a>
-<li><a href="/loginForm.do">로그인</a>
-<li><a href="/selectAllMember.do">회원 목록</a>
-</ul>
-<h1>main</h1>
+<header> <%@ include file="/WEB-INF/views/common/header.jsp" %> </header>
+<main>
+MAIN
+</main>
+<footer> <%@ include file="/WEB-INF/views/common/footer.jsp" %> </footer>
 </body>
 </html>

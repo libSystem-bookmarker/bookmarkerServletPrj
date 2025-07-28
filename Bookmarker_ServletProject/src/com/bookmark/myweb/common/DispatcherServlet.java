@@ -77,7 +77,7 @@ public class DispatcherServlet extends HttpServlet {
 		}
 
 		if (viewPage != null) { // 뷰로 포워드
-			viewPage = "/WEB-INF/views/" + viewPage + ".jsp";
+			viewPage = "/WEB-INF/views/" + viewPage;
 		} else {
 			viewPage = "/WEB-INF/views/index.jsp";
 		}

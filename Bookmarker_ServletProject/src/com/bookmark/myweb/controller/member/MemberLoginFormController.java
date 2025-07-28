@@ -13,6 +13,8 @@ public class MemberLoginFormController implements CommandController {
 	 * 
 	 * @author bs.kim
 	 * @return loginForm.jsp로 포워딩
+	 * 
+	 * edited @author ys.kim
 	 */
     public String process(HttpServletRequest request, HttpServletResponse response) {
     	return "common/loginForm.jsp";
