@@ -306,73 +306,58 @@
   
 </body>
 
-	<script>
-	  // 모달 요소
-	  const modal = document.getElementById("returnModal");
-	  const confirmBtn = document.getElementById("confirmReturn");
-	  const cancelBtn = document.getElementById("cancelReturn");
-	
-	  // 모든 반납 버튼에 이벤트 등록
-	  document.querySelectorAll(".btn.return").forEach(button => {
-	    button.addEventListener("click", ()=> {
-	      modal.style.display = "flex";
-	    });
-	  });
-	
-	  // 취소 버튼 클릭 시 모달 닫기
-	  cancelBtn.addEventListener("click", () => {
-	    modal.style.display = "none";
-	  });
-	
-	  // 확인 버튼 클릭 시 처리
-	  confirmBtn.addEventListener("click", () => {
-	    modal.style.display = "none";
-	    alert("반납 처리되었습니다."); // 실제 반납 처리는 ajax나 form으로 추가
-	  });
-	
-	  // ESC 키로 닫기, 외부 클릭으로 닫기 (선택사항)
-	  window.addEventListener("click", (e) => {
-	    if (e.target === modal) {
-	      modal.style.display = "none";
-	    }
-	  });
-	  
-	  
-	  
-	// 연장 모달 요소
-	  const extendModal = document.getElementById("extendModal");
-	  const confirmExtendBtn = document.getElementById("confirmExtend");
-	  const cancelExtendBtn = document.getElementById("cancelExtend");
 
-	  // 모든 연장 버튼에 이벤트 등록
-	  document.querySelectorAll(".btn.extend").forEach(button => {
-	    button.addEventListener("click", () => {
-	      extendModal.style.display = "flex";
-	    });
-	  });
-
-	  // 연장 취소
-	  cancelExtendBtn.addEventListener("click", () => {
-	    extendModal.style.display = "none";
-	  });
-
-	  // 연장 확인
-	  confirmExtendBtn.addEventListener("click", () => {
-	    extendModal.style.display = "none";
-	    alert("연장 요청이 완료되었습니다."); // 실제 처리 필요 시 AJAX 등 추가
-	  });
-
-	  // 바깥 클릭 시 닫기
-	  window.addEventListener("click", (e) => {
-	    if (e.target === modal) {
-	      modal.style.display = "none";
-	    }
-	    if (e.target === extendModal) {
-	      extendModal.style.display = "none";
-	    }
-	  });
-	  
-	</script>
 	
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const returnModal = document.getElementById("returnModal");
+  const extendModal = document.getElementById("extendModal");
+
+  // 버튼에 정확히 클릭 이벤트만 걸기 (아이콘 영역 문제 방지)
+  document.querySelectorAll(".btn.
+").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      if (e.currentTarget === btn) {
+        extendModal.style.display = "none";
+        returnModal.style.display = "flex";
+      }
+    });
+  });
+
+  document.querySelectorAll(".btn.extend").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      if (e.currentTarget === btn) {
+        returnModal.style.display = "none";
+        extendModal.style.display = "flex";
+      }
+    });
+  });
+
+  // 반납 모달 확인 / 취소
+  document.getElementById("confirmReturn").addEventListener("click", () => {
+    returnModal.style.display = "none";
+    alert("반납 처리되었습니다.");
+  });
+  document.getElementById("cancelReturn").addEventListener("click", () => {
+    returnModal.style.display = "none";
+  });
+
+  // 연장 모달 확인 / 취소
+  document.getElementById("confirmExtend").addEventListener("click", () => {
+    extendModal.style.display = "none";
+    alert("연장 요청이 완료되었습니다.");
+  });
+  document.getElementById("cancelExtend").addEventListener("click", () => {
+    extendModal.style.display = "none";
+  });
+
+  // 바깥 클릭 시 모달 닫기
+  window.addEventListener("click", (e) => {
+    if (e.target === returnModal) returnModal.style.display = "none";
+    if (e.target === extendModal) extendModal.style.display = "none";
+  });
+});
+</script>
+
 
 </html>
