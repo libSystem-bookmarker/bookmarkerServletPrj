@@ -12,7 +12,9 @@
 <body>
 <header> <%@ include file="/WEB-INF/views/common/header.jsp" %> </header>
 <main>
-MAIN
+<section class="content">
+<h1>main</h1>
+</section>
 </main>
 <footer> <%@ include file="/WEB-INF/views/common/footer.jsp" %> </footer>
 </body>

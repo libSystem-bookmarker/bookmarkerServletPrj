@@ -21,7 +21,13 @@ body {
 }
 
 main {
-  flex: 1; /* ← 남는 공간을 채움 */
+  display: flex;
+  flex-direction: row; /* 기본값이라 생략 가능하지만 명시해도 OK */
+}
+
+.content {
+  flex-grow: 1;
+  padding: 30px;
 }
 
 .footer {

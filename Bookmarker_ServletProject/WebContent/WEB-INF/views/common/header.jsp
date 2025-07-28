@@ -23,7 +23,7 @@ if (loginMember == null) {
 		<%
             } else {
         %>
-		<span style="color: white;">👤 <%= loginMember.getName() %>님이
+		<span style="color: white;"> <%= loginMember.getName() %>님이
 			로그인하셨습니다.
 		</span> &nbsp; <a href="${myPageUrl}"
 			style="color: white; text-decoration: none;">마이 페이지</a> &nbsp; <a

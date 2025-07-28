@@ -34,8 +34,7 @@ public class MemberLoginController implements CommandController {
 		try {
 			//check login is null
 			if(loginMember != null) {
-				HttpSession session = request.getSession(); //get session
-				session.setAttribute("loginMember", loginMember); //로그인한 사용자 정보 세션에 저장
+				 request.getSession().setAttribute("loginMember", loginMember);
 				return "redirect:/index.do";
 			} else {
 				return "redirect:/loginForm.do";
