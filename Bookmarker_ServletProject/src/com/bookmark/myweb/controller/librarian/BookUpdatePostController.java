@@ -9,14 +9,16 @@ import com.bookmark.myweb.common.CommandController;
 import com.bookmark.myweb.model.BookVO;
 import com.bookmark.myweb.service.BookService;
 
-public class BookInsertPostController implements CommandController {
-
+public class BookUpdatePostController implements CommandController{
+	
 	private BookService bookService= new BookService();
 	
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response) {
 		
+		
 		// 폼에서 전송된 파라미터 받기
+		String bookId = request.getParameter("bookId");
 		String title = request.getParameter("title");
 		String author = request.getParameter("author");
 		String publisher = request.getParameter("publisher");
@@ -27,19 +29,24 @@ public class BookInsertPostController implements CommandController {
 		
 		// BookVO 객체 생성 및 값 세팅
 		BookVO book = new BookVO();
+		book.setBookId(Integer.parseInt(bookId));
 		book.setTitle(title);
 		book.setAuthor(author);
 		book.setPublisher(publisher);
 		book.setTotalCount(Integer.parseInt(totalCount));
 		book.setCategoryId(Integer.parseInt(categoryId));
-		// 날짜는 java.sql.Date로 변환
 		book.setCreateAt(Date.valueOf(createAt));
 		
-		bookService.insertBook(book);
+		try {
+			bookService.updateBook(book);
+			// 도서 상세 페이지로, 임시로 도서 목록 페이지 redirect
+			return "redirect:/selectBooks.do";
+			
+		}catch(RuntimeException e){
+			return "librarian/insertBookform.jsp";
+		}
 		
-		// 등록 실패 시 다시 등록 페이지로 /insertBookform.do
 		
-		return "redirect:/selectBooks.do";
 	}
 
 }
