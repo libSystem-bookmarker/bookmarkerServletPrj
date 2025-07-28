@@ -7,16 +7,16 @@
 
     <!-- 공통 메뉴 -->
     <li class="menu-item" onclick="selectMenu(this)">
-      <a href="/memberInfoForm.do">내 정보</a>
+      <a href="memberInfo.jsp?tab=profile">내 정보</a>
     </li>
 
     <!-- 관리자(admin) 메뉴 -->
     <c:if test="${loginMember.role == 'admin'}">
       <li class="menu-item" onclick="selectMenu(this)">
-        <a href="/insertMemberForm.do">회원 등록</a>
+        <a href="memberInfo.jsp?tab=insertMember">회원 등록</a>
       </li>
       <li class="menu-item" onclick="selectMenu(this)">
-        <a href="/selectAllMember.do">회원 조회</a>
+        <a href="memberInfo.jsp?tab=searchMember">회원 조회</a>
       </li>
     </c:if>
 

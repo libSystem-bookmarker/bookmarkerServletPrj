@@ -222,4 +222,50 @@ public class AdminMemberDAO {
 		}
 		return null;
 	}
+	
+	public void updateAdminMember(int userId, String name, String role, String phone, String email, String address, int unitId) {
+	    String sql = "UPDATE MEMBER SET NAME=?, ROLE=?, PHONE_NUMBER=?, EMAIL=?, ADDRESS=?, UNIT_ID=? WHERE USER_ID=?";
+	    try (Connection conn = dataSource.getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	        pstmt.setString(1, name);
+	        pstmt.setString(2, role);
+	        pstmt.setString(3, phone);
+	        pstmt.setString(4, email);
+	        pstmt.setString(5, address);
+	        pstmt.setInt(6, unitId);
+	        pstmt.setInt(7, userId);
+	        pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+
+	public void updateName(int userId, String name) {
+	    String sql = "UPDATE MEMBER SET NAME=? WHERE USER_ID=?";
+	    try (Connection conn = dataSource.getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	        pstmt.setString(1, name);
+	        pstmt.setInt(2, userId);
+	        pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	public int updateMemberInfo(int userId, String phone, String email, String address) {
+		String sql = "UPDATE MEMBER SET PHONE_NUMBER = ?, EMAIL = ?, ADDRESS = ? WHERE USER_ID = ?";
+		try (Connection conn = dataSource.getConnection();
+		     PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, phone);
+			pstmt.setString(2, email);
+			pstmt.setString(3, address);
+			pstmt.setInt(4, userId);
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+
 }

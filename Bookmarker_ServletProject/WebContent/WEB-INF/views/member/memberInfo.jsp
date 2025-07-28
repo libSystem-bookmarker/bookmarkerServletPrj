@@ -15,7 +15,33 @@
 <main>
 <%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
 <section class="contetnt">
-<h1>회원정보수정</h1>
+<%
+    String tab = request.getParameter("tab");
+    if (tab == null || tab.isEmpty()) {
+        tab = "profile"; // 기본값
+    }
+
+    String pageToInclude = null;
+
+    switch (tab) {
+        case "profile":
+            pageToInclude = "memberTab/profile.jsp";
+            break;
+        case "password":
+            pageToInclude = "memberTab/password.jsp";
+            break;
+        case "image":
+            pageToInclude = "memberTab/image.jsp";
+            break;
+        default:
+            pageToInclude = "memberTab/profile.jsp"; // 잘못된 값도 기본 탭으로
+    }
+%>
+
+<section>
+    <jsp:include page="<%= pageToInclude %>" />
+</section>
+
 </section>
 </main>
 <footer> <%@ include file="/WEB-INF/views/common/footer.jsp" %> </footer>
