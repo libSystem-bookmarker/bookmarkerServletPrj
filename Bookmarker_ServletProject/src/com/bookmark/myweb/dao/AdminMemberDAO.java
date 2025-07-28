@@ -44,7 +44,6 @@ public class AdminMemberDAO {
 					+ "VALUES (MEMBER_SEQ.NEXTVAL, '1234', ?, ?, ?, ?, ?, ?, ?)";
 
 			pstmt = con.prepareStatement(sql);
-			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, member.getRole());
 			pstmt.setString(2, member.getName());
 			pstmt.setString(3, member.getPhoneNumber());

@@ -15,7 +15,7 @@
 <main>
 <%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
 <section class="contetnt">
-<h1>회원정보수정</h1>
+
 </section>
 </main>
 <footer> <%@ include file="/WEB-INF/views/common/footer.jsp" %> </footer>
