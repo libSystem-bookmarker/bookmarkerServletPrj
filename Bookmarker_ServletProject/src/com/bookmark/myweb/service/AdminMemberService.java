@@ -79,4 +79,13 @@ public class AdminMemberService {
 	public List<MemberVO> selectRoleMembers(String role) {
 		return adminMemberDAO.selectRoleMembers(role);
 	}
+	
+	/**
+	 * @author bs.kim
+	 * @param userId
+	 * @return 사용자의 비밀번호 반환 (비밀번호 찾기용)
+	 */
+	public String findPassword(int userId) {
+		 return adminMemberDAO.getPassword(String.valueOf(userId));
+	}
 }
