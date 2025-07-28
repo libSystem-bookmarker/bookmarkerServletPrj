@@ -13,6 +13,15 @@ public class BookService {
 	BookDAO dao = new BookDAO();
 	
 	
+	public void updateReturnBookById(int bookLoanDetailId, int bookId) {
+		
+		int updateRow = dao.updateReturnBookById(bookLoanDetailId, bookId);
+		
+		if(updateRow <= 0) {
+			throw new RuntimeException("❌ 도서 반납을 실패했습니다.");
+		}
+	}
+	
 	
 	public void deleteBookById(int bookId) {
 		
