@@ -23,9 +23,10 @@ public class BookWithLoanVO {
     private int userId;
     private String userName;
     
-    private Date loanDate;
-    private Date returnDate;
-    private Date dueDate;
-    private String isOverdue; // 'Y' or 'N'
+    private Date loanDate; // 대출일
+    private Date returnDate; // 반납 예정일
+    private Date dueDate; // 실제 반납일
+    private String loanStatus; // 상태 : 대출, 반납, 연체
+    private int daysOver = 0; // 연체일
 
 }
