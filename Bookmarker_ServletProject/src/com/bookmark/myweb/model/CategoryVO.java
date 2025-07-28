@@ -14,7 +14,6 @@ public class CategoryVO {
 		this.name = name;
 	}
 	
-	
-	
+
 	
 }

@@ -1,4 +1,4 @@
-container {
+main {
     text-align: center;
 }
 
@@ -58,3 +58,4 @@ input::placeholder {
     text-decoration: underline;
     margin-bottom: 100px;
 }
+
