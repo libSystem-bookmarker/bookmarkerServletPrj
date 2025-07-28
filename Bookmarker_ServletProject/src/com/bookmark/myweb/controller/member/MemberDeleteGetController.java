@@ -13,6 +13,6 @@ public class MemberDeleteGetController implements CommandController {
 
     @Override
     public String process(HttpServletRequest request, HttpServletResponse response) {
-        return "/WEB-INF/views/member/deleteMember.jsp";
+        return "/member/deleteMember.jsp";
     }
 }
