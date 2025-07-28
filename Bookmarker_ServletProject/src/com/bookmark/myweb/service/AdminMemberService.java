@@ -48,6 +48,27 @@ public class AdminMemberService {
 			return false;
 		}
 	}
+	
+	
+    /**
+     * @author ys.kim
+     * @param userId
+     * @param inputPw
+     * @return
+     * 
+     * 로그인 가능 아이디 및 비밀번호 일치 여부 확인
+     */
+    public MemberVO login(int userId, String inputPw) {
+    	System.out.println("member service login method");
+        //사용자 아이디 조회
+    	MemberVO dbPw = adminMemberDAO.selectMemberId(userId);
+        if (dbPw != null && dbPw.getPw().equals(inputPw)) {
+        	System.out.println("login success");
+            return dbPw; // 로그인 성공 시 해당 회원 정보 리턴
+        }
+        System.out.println("loginfail");
+        return null; // 로그인 실패
+    }
 
 	// 전체 회원 조회
 	public List<MemberVO> selectAllMembers() {
