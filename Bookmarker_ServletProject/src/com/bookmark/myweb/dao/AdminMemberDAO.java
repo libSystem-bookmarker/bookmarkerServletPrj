@@ -79,10 +79,9 @@ public class AdminMemberDAO {
 	/**
 	 * @author ys.kim
 	 * @param member
-	 * @return
-	 * 회원 정보 수정 기능 - 관리자 용
+	 * @return 회원 정보 수정 기능 - 관리자 용
 	 */
-	public int updateMemberAdmin (MemberVO member) {
+	public int updateMemberAdmin(MemberVO member) {
 		int result = 0;
 		try (Connection con = dataSource.getConnection()) {
 			String sql = "UPDATE member SET role = ?, name = ?, unit_id = ? WHERE user_id = ? OR name = ?";
@@ -104,61 +103,57 @@ public class AdminMemberDAO {
 
 		return result;
 	}
-	
+
 	/**
 	 * @author ys.kim
-	 * @return
-	 * 회원 전체 리스트
+	 * @return 회원 전체 리스트
 	 */
-	public List<MemberVO> selectAllMembers () {
-		//ser_id, pw, role, name, phone_number, address, email, unit_id, created_at
-		List <MemberVO> memberListAll = new ArrayList<>();
-		String sql = "SELECT user_id AS userId, pw AS pw, role AS role, name AS name, " +
-	             "phone_number AS phoneNumber, address AS address, email AS email, " +
-	             "unit_id AS unitId, created_at AS createdAt FROM member";
+	public List<MemberVO> selectAllMembers() {
+		// ser_id, pw, role, name, phone_number, address, email, unit_id, created_at
+		List<MemberVO> memberListAll = new ArrayList<>();
+		String sql = "SELECT user_id AS userId, pw AS pw, role AS role, name AS name, "
+				+ "phone_number AS phoneNumber, address AS address, email AS email, "
+				+ "unit_id AS unitId, created_at AS createdAt FROM member";
 
 		try (Connection con = dataSource.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(sql);
-			ResultSet rs = pstmt.executeQuery();){
-			while(rs.next()) {
-	            MemberVO vo = extractMemberFromResultSet(rs);
-	            memberListAll.add(vo);
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery();) {
+			while (rs.next()) {
+				MemberVO vo = extractMemberFromResultSet(rs);
+				memberListAll.add(vo);
 			}
 		} catch (SQLException e) {
 			System.out.println("selectAllMembers exception: " + e.getMessage());
 			throw new RuntimeException();
 		}
-		
+
 		return memberListAll;
 	}
-	
+
 	/**
 	 * @author ys.kim
 	 * @param role
-	 * @return
-	 * role 카테고리에 따라 회원 목록 출력
+	 * @return role 카테고리에 따라 회원 목록 출력
 	 */
 	public List<MemberVO> selectRoleMembers(String role) {
-		List <MemberVO> memberRoleList = new ArrayList<>();
-		String sql = "SELECT user_id AS userId, pw AS pw, role AS role, name AS name, " +
-	             "phone_number AS phoneNumber, address AS address, email AS email, " +
-	             "unit_id AS unitId, created_at AS createdAt FROM member WHERE role = ?";
-		try (Connection con = dataSource.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(sql);) {
+		List<MemberVO> memberRoleList = new ArrayList<>();
+		String sql = "SELECT user_id AS userId, pw AS pw, role AS role, name AS name, "
+				+ "phone_number AS phoneNumber, address AS address, email AS email, "
+				+ "unit_id AS unitId, created_at AS createdAt FROM member WHERE role = ?";
+		try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
 			pstmt.setString(1, role);
 			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()) {
-				 MemberVO vo = extractMemberFromResultSet(rs);
-				 memberRoleList.add(vo);
+			while (rs.next()) {
+				MemberVO vo = extractMemberFromResultSet(rs);
+				memberRoleList.add(vo);
 			}
 		} catch (SQLException e) {
 			System.out.println("selectRoleMembers exception: " + e.getMessage());
 			throw new RuntimeException();
 		}
-		return memberRoleList; 
+		return memberRoleList;
 	}
-	
-	
+
 	/**
 	 * @author ys.kim
 	 * @param rs
@@ -167,41 +162,65 @@ public class AdminMemberDAO {
 	 */
 	private MemberVO extractMemberFromResultSet(ResultSet rs) throws SQLException {
 		MemberVO member = new MemberVO();
-	    member.setUserId(rs.getInt("userId"));
-	    member.setPw(rs.getString("pw"));
-	    member.setRole(rs.getString("role"));
-	    member.setName(rs.getString("name"));
-	    member.setPhoneNumber(rs.getString("phoneNumber"));
-	    member.setAddress(rs.getString("address"));
-	    member.setEmail(rs.getString("email"));
-	    member.setUnitId(rs.getInt("unitId"));
-	    member.setCreatedAt(rs.getDate("createdAt"));
-	    return member;
+		member.setUserId(rs.getInt("userId"));
+		member.setPw(rs.getString("pw"));
+		member.setRole(rs.getString("role"));
+		member.setName(rs.getString("name"));
+		member.setPhoneNumber(rs.getString("phoneNumber"));
+		member.setAddress(rs.getString("address"));
+		member.setEmail(rs.getString("email"));
+		member.setUnitId(rs.getInt("unitId"));
+		member.setCreatedAt(rs.getDate("createdAt"));
+		return member;
 	}
 
 	/**
 	 * @author ys.kim
 	 * @param userid
-	 * @return
-	 * 비밀번호 확인 -> 정보 수정 시
+	 * @return 비밀번호 확인 -> 정보 수정 시
 	 * 
 	 */
 	public String getPassword(String userid) {
 		String sql = "SELECT pw FROM member WHERE user_id = ?";
-		try (Connection con = dataSource.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(sql);) {
+		try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
 			pstmt.setInt(1, Integer.parseInt(userid));
 			ResultSet rs = pstmt.executeQuery();
-			if(rs.next()) {
-				return rs.getString("pw"); //pw 컬럼 값 반환
+			if (rs.next()) {
+				return rs.getString("pw"); // pw 컬럼 값 반환
 			}
-			
+
 		} catch (SQLException e) {
-			System.out.println("get pw error message: "+e.getMessage());
+			System.out.println("get pw error message: " + e.getMessage());
 			throw new RuntimeException(e);
 		}
-		
-		return null; //조회된 결과 없을 때
+
+		return null; // 조회된 결과 없을 때
+	}
+
+	// 로그인
+	/**
+	 * @author ys.kim
+	 * @param userId 로그인을 위해 사용자 정보 찾아옴
+	 */
+	public MemberVO selectMemberId(int userId) {
+		String sql = "SELECT user_id, pw, name, role FROM member WHERE user_id = ?";
+		try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, userId);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				MemberVO member = new MemberVO();
+				member.setUserId(rs.getInt("user_id"));
+				member.setPw(rs.getString("pw"));
+				member.setName(rs.getString("name"));
+				member.setRole(rs.getString("role"));
+
+				return member;
+			}
+		} catch (SQLException e) {
+			System.out.println("get member id info error message: " + e.getMessage());
+			throw new RuntimeException(e);
+		}
+		return null;
 	}
 	
 	/**

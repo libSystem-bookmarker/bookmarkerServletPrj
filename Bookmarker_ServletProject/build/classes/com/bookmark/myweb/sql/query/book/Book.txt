@@ -1,8 +1,85 @@
 # CREATE TABLE
 
+--카테고리 생성 후 book 생성
+CREATE TABLE category (
+    category_id      INT PRIMARY KEY,
+    name             VARCHAR2(100) NOT NULL
+);
+
+
+--INSERT category
+INSERT INTO category (category_id, name) VALUES (1, '총류');
+INSERT INTO category (category_id, name) VALUES (2, '철학');
+INSERT INTO category (category_id, name) VALUES (3, '종교');
+INSERT INTO category (category_id, name) VALUES (4, '사회과학');
+INSERT INTO category (category_id, name) VALUES (5, '자연과학');
+INSERT INTO category (category_id, name) VALUES (6, '기술과학');
+INSERT INTO category (category_id, name) VALUES (7, '예술');
+INSERT INTO category (category_id, name) VALUES (8, '언어');
+INSERT INTO category (category_id, name) VALUES (9, '문학');
+INSERT INTO category (category_id, name) VALUES (10, '역사');
+
+commit;
+
+
+-- book
+CREATE TABLE book (
+    book_id          INT PRIMARY KEY,
+    category_id      INT NOT NULL,
+    title            VARCHAR2(200) NOT NULL,
+    author           VARCHAR2(100),
+    publisher        VARCHAR2(100),
+    total_count      INT DEFAULT 0,
+    create_at        DATE,
+    
+    CONSTRAINT fk_book_category
+        FOREIGN KEY (category_id)
+        REFERENCES category(category_id)
+);
+
+
+--book_id auto increment
+CREATE SEQUENCE book_seq
+    START WITH 1
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE;
+    
+CREATE OR REPLACE TRIGGER trg_book_id
+BEFORE INSERT ON book
+FOR EACH ROW
+BEGIN
+    SELECT book_seq.NEXTVAL INTO :NEW.book_id FROM dual;
+END;
+/
+
+commit;
+
+
+
 # INSERT
+INSERT INTO book (category_id, title, author, publisher, total_count, create_at)
+VALUES (1, '지식의 시작', '김지식', '지식출판사', 5, DATE '2025-06-15');
+INSERT INTO book (category_id, title, author, publisher, total_count, create_at)
+VALUES (2, '철학의 이해', '박철학', '철학당', 3, DATE '2025-06-01');
+INSERT INTO book (category_id, title, author, publisher, total_count, create_at)
+VALUES (3, '종교란 무엇인가', '이종교', '신앙사', 4, DATE '2025-05-17');
+INSERT INTO book (category_id, title, author, publisher, total_count, create_at)
+VALUES (4, '사회 탐험', '정사회', '사회문화사', 2, DATE '2025-05-03');
+INSERT INTO book (category_id, title, author, publisher, total_count, create_at)
+VALUES (5, '자연의 이치', '최자연', '네이처북스', 6, DATE '2025-04-19');
+INSERT INTO book (category_id, title, author, publisher, total_count, create_at)
+VALUES (6, '기술의 미래', '한기술', '테크프레스', 3, DATE '2025-04-05');
+INSERT INTO book (category_id, title, author, publisher, total_count, create_at)
+VALUES (7, '예술로 말하다', '윤예술', '아트출판', 4, DATE '2025-03-22');
+INSERT INTO book (category_id, title, author, publisher, total_count, create_at)
+VALUES (8, '언어의 본질', '남언어', '랭귀지북스', 2, DATE '2025-03-08');
+
+commit;
+
 
 # SELECT
+SELECT * FROM book;
 
 # UPDATE
 
