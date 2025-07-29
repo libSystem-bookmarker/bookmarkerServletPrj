@@ -4,13 +4,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import com.bookmark.myweb.model.MajorVO;
 
 public class MajorDAO {
 	
@@ -59,4 +63,49 @@ public class MajorDAO {
 
 	        return result;
 	}
+	
+
+	public List<MajorVO> getDepartments(int facultyId) {
+	    List<MajorVO> list = new ArrayList<>();
+	    String sql = "SELECT UNIT_ID, UNIT_NAME FROM ACADEMIC_UNIT WHERE UNIT_TYPE = 'DEPARTMENT' AND PARENT_ID = ?";
+	    try (Connection cnn = dataSource.getConnection();
+	         PreparedStatement pstmt = cnn.prepareStatement(sql)) {
+	        pstmt.setInt(1, facultyId);
+	        ResultSet rs = pstmt.executeQuery();
+	        while (rs.next()) {
+	            MajorVO vo = new MajorVO();
+	            vo.setUnitId(rs.getInt("UNIT_ID"));
+	            vo.setUnitName(rs.getString("UNIT_NAME"));
+	            list.add(vo);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return list;
+	}
+	
+    public List<MajorVO> selectFacultyList() {
+        List<MajorVO> facultyList = new ArrayList<>();
+
+        String sql = "SELECT UNIT_ID, UNIT_NAME, UNIT_TYPE FROM ACADEMIC_UNIT WHERE UNIT_TYPE = 'FACULTY' ORDER BY UNIT_ID";
+
+        try (
+            Connection con = dataSource.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+        ) {
+            while (rs.next()) {
+                MajorVO vo = new MajorVO();
+                vo.setUnitId(rs.getInt("UNIT_ID"));
+                vo.setUnitName(rs.getString("UNIT_NAME"));
+                vo.setUnitType(rs.getString("UNIT_TYPE"));
+                facultyList.add(vo);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return facultyList;
+    }
+
 }

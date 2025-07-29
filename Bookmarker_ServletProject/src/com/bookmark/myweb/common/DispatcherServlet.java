@@ -65,14 +65,8 @@ public class DispatcherServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		String command = request.getRequestURI().substring(request.getContextPath().length());
+		CommandController controller = commandControllerMap.get(command); // uri 를 이용해 맵으로부터 커맨드 핸들러 객체 찾음
 
-		// 루트 접근 시 index.do로 리디렉션
-		if (command.equals("/") || command.equals("")) {
-			response.sendRedirect(request.getContextPath() + "/index.do");
-			return;
-		}
-
-		CommandController controller = commandControllerMap.get(command);
 		if (controller == null) {
 			controller = new ErrorController();
 		}
@@ -85,15 +79,14 @@ public class DispatcherServlet extends HttpServlet {
 		}
 
 
-		try {
+		try {// process는 명령을 처리하고 뷰 페이지 반환
 			viewPage = controller.process(request, response);
-			if (viewPage == null) return;
 			// DispatcherServlet.java
 			if (viewPage == null)
 				return;
 
-			if (viewPage.startsWith("redirect:")) {
-				viewPage = viewPage.substring(9);
+			if ((viewPage != null) && (viewPage.indexOf("redirect:") == 0)) { // 뷰 이름 앞에 리다이렉트가 붙으면 리다이렉트
+				viewPage = viewPage.substring(9); // 9는 redirect의 길이
 				response.sendRedirect(request.getContextPath() + viewPage);
 				return;
 			}
@@ -101,8 +94,6 @@ public class DispatcherServlet extends HttpServlet {
 			throw new ServletException(e);
 		}
 
-		if (!viewPage.startsWith("/WEB-INF/")) {
-			viewPage = "/WEB-INF/views/" + viewPage;
 		if (viewPage != null) {
 			if (!viewPage.startsWith("/WEB-INF/")) {
 				viewPage = "/WEB-INF/views/" + viewPage;
@@ -113,8 +104,7 @@ public class DispatcherServlet extends HttpServlet {
 
 		RequestDispatcher disp = request.getRequestDispatcher(viewPage);
 		disp.forward(request, response);
-	}
-		
+
 	}
 
 	@Override

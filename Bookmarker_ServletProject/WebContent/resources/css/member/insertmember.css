@@ -1,0 +1,56 @@
+form {
+    background-color: white;
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+}
+
+h1, h2 {
+    color: #173A6F; /* 헤더색 */
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    color: #171717; /* 기본 폰트 */
+    font-weight: 600;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #F7F6F6; /* 기본 폰트 배경 */
+    font-size: 14px;
+}
+
+input[type="submit"] {
+    margin-top: 30px;
+    width: 100%;
+    background-color: #173A6F; /* 버튼 색상 (헤더 색) */
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #3C5475; /* hover 시 푸터 색상 */
+}
+
+p {
+    color: red;
+    text-align: center;
+}

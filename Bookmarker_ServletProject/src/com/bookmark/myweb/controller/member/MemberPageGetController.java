@@ -35,12 +35,13 @@ public class MemberPageGetController implements CommandController {
 		    request.setAttribute("facultyName", names.get("facultyName"));
 		}
 
-		if (tab == null || tab.isEmpty() || tab.equals("profile")) {
-			includePage = "/member/" + tab + ".jsp";
+		if (tab == null || tab.isEmpty() || tab.equals("profile") || tab.equals("null")) {
+		    tab = "profile";  // 명시적 디폴트
+		    includePage = "/member/" + tab + ".jsp";
 		} else {
-			// get Page
-			includePage = "/" + role + "/" + tab + ".jsp";
+		    includePage = "/" + role + "/" + tab + ".jsp";
 		}
+
 		
 		try {
 			if ("true".equals(request.getParameter("isAjax"))) {

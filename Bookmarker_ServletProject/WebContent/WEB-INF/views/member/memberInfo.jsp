@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/resources/css/common/common.css">
     <link rel="stylesheet" href="/resources/css/common/sideNav.css">
     <link rel="stylesheet" href="/resources/css/member/profile.css">
+    <link rel="stylesheet" href="/resources/css/member/insertmember.css"> 
     <meta charset="UTF-8">
     <title>BOOKMARK</title>
 </head>
