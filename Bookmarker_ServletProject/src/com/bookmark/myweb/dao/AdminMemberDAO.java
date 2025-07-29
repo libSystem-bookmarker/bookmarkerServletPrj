@@ -76,7 +76,26 @@ public class AdminMemberDAO {
 		return rowCount;
 	}
 	
-	//select member info
+	//select member info 수정된 정보를 포함한 최신 MemberVO를 반환
+	public MemberVO selectMemberInfo (int userId) {
+		MemberVO vo = new MemberVO();
+		String sql = "SELECT user_id AS userId, pw AS pw, role AS role, name AS name, "
+				+ "phone_number AS phoneNumber, address AS address, email AS email, "
+				+ "unit_id AS unitId, created_at AS createdAt FROM member WHERE user_id = ?";
+		try(Connection con = dataSource.getConnection();
+			PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, userId);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				vo = extractMemberFromResultSet(rs);
+			}
+		} catch (SQLException e) {
+			System.out.println("selectMemberInfo exception: " + e.getMessage());
+			throw new RuntimeException();
+		}
+		
+		return vo;
+	}
 
 	/**
 	 * @author ys.kim
@@ -111,7 +130,6 @@ public class AdminMemberDAO {
 	 * @return 회원 전체 리스트
 	 */
 	public List<MemberVO> selectAllMembers() {
-		// ser_id, pw, role, name, phone_number, address, email, unit_id, created_at
 		List<MemberVO> memberListAll = new ArrayList<>();
 		String sql = "SELECT user_id AS userId, pw AS pw, role AS role, name AS name, "
 				+ "phone_number AS phoneNumber, address AS address, email AS email, "

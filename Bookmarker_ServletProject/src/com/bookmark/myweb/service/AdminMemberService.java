@@ -115,4 +115,7 @@ public class AdminMemberService {
 	    return adminMemberDAO.existsUser(userId);
 	}
 
+	public MemberVO selectMemberInfo(int userId) {
+		return adminMemberDAO.selectMemberInfo(userId);
+	}
 }
