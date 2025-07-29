@@ -11,13 +11,6 @@
 <body>
   <header>📚 도서 관리 시스템</header>
 
-  <h2>
-    <c:choose>
-      <c:when test="${empty book.bookId}">📖 도서 등록</c:when>
-      <c:otherwise>📘 도서 수정</c:otherwise>
-    </c:choose>
-  </h2>
-
   <!-- 등록 / 수정 구분 -->
   <c:choose>
     <c:when test="${empty book.bookId}">
@@ -73,7 +66,7 @@
         <select name="categoryId" id="categoryId" required>
           <option value="">-- 분류를 선택하세요 --</option>
           <c:forEach var="category" items="${categoryList}">
-            <option value="${category.categoryId}" 
+            <option value="${category.categoryId}"
               <c:if test="${category.categoryId == book.categoryId}">selected</c:if>>
               ${category.name}
             </option>

@@ -15,6 +15,6 @@ public class BookByCategorySelectController implements CommandController{
 		
 		
 		
-		return "";
+		return "librarian/selectBooks.do";
 	}
 }

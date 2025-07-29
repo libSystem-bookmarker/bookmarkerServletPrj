@@ -20,4 +20,5 @@ public class BookWithCategoryVO {
 	private int totalCount; //소장 책 수량
 	private Date createAt; //출판일
 
+//	private String image_url; // 이미지 path 추가
 }
