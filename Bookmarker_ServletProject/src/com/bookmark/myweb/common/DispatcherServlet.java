@@ -63,11 +63,18 @@ public class DispatcherServlet extends HttpServlet {
 		}
 
 		String viewPage = null;
+		
+		if (command.equals("/") || command.equals("")) {
+		    response.sendRedirect(request.getContextPath() + "/index.do");
+		    return;
+		}
+
 
 		try {// process는 명령을 처리하고 뷰 페이지 반환
 			viewPage = controller.process(request, response);
 			// DispatcherServlet.java
-			if (viewPage == null) return;
+			if (viewPage == null)
+				return;
 
 			if ((viewPage != null) && (viewPage.indexOf("redirect:") == 0)) { // 뷰 이름 앞에 리다이렉트가 붙으면 리다이렉트
 				viewPage = viewPage.substring(9); // 9는 redirect의 길이
@@ -81,9 +88,9 @@ public class DispatcherServlet extends HttpServlet {
 		if (viewPage != null) {
 			if (!viewPage.startsWith("/WEB-INF/")) {
 				viewPage = "/WEB-INF/views/" + viewPage;
+			} else {
+				viewPage = "/WEB-INF/views/index.jsp";
 			}
-		} else {
-			viewPage = "/WEB-INF/views/index.jsp";
 		}
 
 		RequestDispatcher disp = request.getRequestDispatcher(viewPage);

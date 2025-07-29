@@ -17,6 +17,6 @@ public class MemberLoginFormController implements CommandController {
 	 * edited @author ys.kim
 	 */
     public String process(HttpServletRequest request, HttpServletResponse response) {
-    	return "common/loginForm.jsp";
+    	return "/common/loginForm.jsp";
 }
 }
