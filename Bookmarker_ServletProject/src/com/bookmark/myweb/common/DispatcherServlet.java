@@ -78,6 +78,12 @@ public class DispatcherServlet extends HttpServlet {
 		}
 
 		String viewPage = null;
+		
+		if (command.equals("/") || command.equals("")) {
+		    response.sendRedirect(request.getContextPath() + "/index.do");
+		    return;
+		}
+
 
 		try {
 			viewPage = controller.process(request, response);
