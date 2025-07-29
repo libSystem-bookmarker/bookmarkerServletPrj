@@ -79,7 +79,6 @@ public class AdminMemberService {
 	public List<MemberVO> selectRoleMembers(String role) {
 		return adminMemberDAO.selectRoleMembers(role);
 	}
-<<<<<<< HEAD
 
 	// 관리자 수정
 	public void updateAdminMember(int userId, String name, String role, String phone, String email, String address, int unitId) {
@@ -91,14 +90,13 @@ public class AdminMemberService {
 	    adminMemberDAO.updateName(userId, name);
 	}
 
-	// 이름을 제외한 정보만 업데이트 (사서/학생용)
+	// 이름을 제외한 정보만 업데이트
 	public void updateMemberInfo(int userId, String phone, String email, String address) {
 		int result = adminMemberDAO.updateMemberInfo(userId, phone, email, address);
 		System.out.println("updateMemberInfo 결과: " + result);
 	}
 
 
-=======
 	
 	/**
 	 * @author bs.kim
@@ -108,5 +106,4 @@ public class AdminMemberService {
 	public String findPassword(int userId) {
 		 return adminMemberDAO.getPassword(String.valueOf(userId));
 	}
->>>>>>> dev
 }

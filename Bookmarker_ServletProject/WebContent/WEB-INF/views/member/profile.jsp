@@ -1,24 +1,44 @@
-<%@ page import="com.bookmark.myweb.model.MemberVO" %>
-<%
-    MemberVO loginMember = (MemberVO) session.getAttribute("loginMember");
-    String role = loginMember.getRole();
-%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
-<h2>프로필 정보</h2>
+<form action="updateMember.do" method="post" class="profile-form">
+	<input type="hidden" name="userId" value="${loginMember.userId}">
+<h2>${sessionScope.loginMember.name}의 프로필 정보</h2>
 
-<form action="updateMember.do" method="post">
-    <label>이름: <input type="text" name="name" value="<%= loginMember.getName() %>"></label><br>
-    <label>전화번호: <input type="text" name="phoneNumber" value="<%= loginMember.getPhoneNumber() %>"></label><br>
-    <label>주소: <input type="text" name="address" value="<%= loginMember.getAddress() %>"></label><br>
-    <label>이메일: <input type="text" name="email" value="<%= loginMember.getEmail() %>"></label><br>
+	<label>이름
+		<input type="text" name="name" value="${loginMember.name}" readonly>
+	</label><br>
 
-    <% if ("admin".equals(role)) { %>
-        <label>역할: <input type="text" name="role" value="<%= loginMember.getRole() %>" readonly></label><br>
-        <label>소속 학과 (UNIT_ID): <input type="number" name="unitId" value="<%= loginMember.getUnitId() %>"></label><br>
-    <% } else if ("student".equals(role)) { %>
-        <label>학과: <input type="text" value="<%= loginMember.getUnitId() %>" readonly></label><br>
-    <% } %>
+	<label>전화번호
+		<input type="text" name="phoneNumber" value="${loginMember.phoneNumber}">
+	</label><br>
 
-    <button type="submit">수정하기</button>
+	<label>주소
+		<input type="text" name="address" value="${loginMember.address}">
+	</label><br>
+
+	<label>이메일
+		<input type="text" name="email" value="${loginMember.email}">
+	</label><br>
+
+	<label>
+		<input type="text" name="role" value="${loginMember.role}" readonly>
+	</label><br>
+
+<c:if test="${not empty facultyName}">
+    <label>소속 학부:
+        <input type="text" value="${facultyName}" readonly>
+    </label><br>
+</c:if>
+
+<c:if test="${not empty departmentName}">
+    <label>소속 학과:
+        <input type="text" value="${departmentName}" readonly>
+    </label><br>
+</c:if>
+
+
+	<button class="submit" type="submit">수정</button>
+	<button class="reset" type="reset">취소</button>
 </form>

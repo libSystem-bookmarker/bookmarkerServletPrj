@@ -75,6 +75,8 @@ public class AdminMemberDAO {
 
 		return rowCount;
 	}
+	
+	//select member info
 
 	/**
 	 * @author ys.kim
@@ -203,7 +205,7 @@ public class AdminMemberDAO {
 	 * @param userId 로그인을 위해 사용자 정보 찾아옴
 	 */
 	public MemberVO selectMemberId(int userId) {
-		String sql = "SELECT user_id, pw, name, role FROM member WHERE user_id = ?";
+		String sql = "SELECT * FROM member WHERE user_id = ?";
 		try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setInt(1, userId);
 			ResultSet rs = pstmt.executeQuery();
@@ -211,8 +213,13 @@ public class AdminMemberDAO {
 				MemberVO member = new MemberVO();
 				member.setUserId(rs.getInt("user_id"));
 				member.setPw(rs.getString("pw"));
-				member.setName(rs.getString("name"));
 				member.setRole(rs.getString("role"));
+				member.setName(rs.getString("name"));
+				member.setPhoneNumber(rs.getString("phone_number"));
+				member.setAddress(rs.getString("address"));
+				member.setEmail(rs.getString("email"));
+				member.setUnitId(rs.getInt("unit_id"));
+				member.setCreatedAt(rs.getDate("created_at"));
 
 				return member;
 			}
@@ -266,6 +273,5 @@ public class AdminMemberDAO {
 		}
 		return 0;
 	}
-
 
 }
