@@ -1,0 +1,56 @@
+h2 {
+  margin-top: 20px;
+  color: #173A6F;
+}
+
+.result-message {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.success {
+  background-color: #e0f7e9;
+  color: #2e7d32;
+}
+
+.error {
+  background-color: #fdecea;
+  color: #c62828;
+}
+
+.pw-update-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 40px auto;
+}
+
+.pw-update-form input {
+  margin-bottom: 20px;
+  height: 40px;
+  padding-left: 15px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+.pw-update-form input:focus {
+  outline: none;
+  border: 2px solid #173A6F;
+}
+
+.pw-update-form button {
+  height: 40px;
+  border: none;
+  background-color: #173A6F;
+  color: white;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.back-link {
+  text-align: center;
+  margin-top: 20px;
+}

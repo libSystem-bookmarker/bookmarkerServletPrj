@@ -240,5 +240,23 @@ public class AdminMemberDAO {
 	        throw new RuntimeException(e);
 	    }
 	}
+	
+	public boolean existsUser(int userId) {
+	    String sql = "SELECT COUNT(*) FROM member WHERE user_id = ?";
+	    try (Connection con = dataSource.getConnection();
+	         PreparedStatement pstmt = con.prepareStatement(sql)) {
+	        pstmt.setInt(1, userId);
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            if (rs.next()) {
+	                return rs.getInt(1) > 0;
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        throw new RuntimeException("사용자 존재 여부 확인 실패", e);
+	    }
+	    return false;
+	}
+
 
 }

@@ -86,14 +86,15 @@ public class AdminMemberService {
 	 * @return 사용자의 비밀번호 반환 (비밀번호 찾기용)
 	 */
 	public String findPassword(int userId) {
-		 return adminMemberDAO.getPassword(String.valueOf(userId));
+	    return adminMemberDAO.getPassword(String.valueOf(userId));
 	}
-	/**
-	 * @author bs.kim
-	 * @param userid
-	 */
+
 	public int updatePassword(int userId, String newPw) {
-	    AdminMemberDAO dao = new AdminMemberDAO();
-	    return dao.updatePassword(userId, newPw);
+	    return adminMemberDAO.updatePassword(userId, newPw);
 	}
+
+	public boolean existsUser(int userId) {
+	    return adminMemberDAO.existsUser(userId);
+	}
+
 }
