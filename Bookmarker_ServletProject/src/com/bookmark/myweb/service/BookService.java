@@ -54,9 +54,9 @@ public class BookService {
 	}
 	
 	
-	public BookVO selectBookById(int bookId) {
+	public BookVO selectBookVOById(int bookId) {
 		
-		return dao.selectBookById(bookId);
+		return dao.selectBookVOById(bookId);
 		
 	}
 	

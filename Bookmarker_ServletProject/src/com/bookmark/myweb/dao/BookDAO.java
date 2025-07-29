@@ -35,6 +35,39 @@ public class BookDAO {
 	
 	
 	
+	
+    public int insertBookLoanDetail(int userId, int bookId) {
+        String sql = "INSERT INTO book_loan_detail (" +
+                     "    book_loan_detail_id, book_id, user_id, loan_date, return_date, loan_status" +
+                     ") VALUES (" +
+                     "    book_loan_detail_seq.NEXTVAL, ?, ?, ?, ?, ?" +
+                     ")";
+
+        int result = 0;
+
+        try (
+            Connection conn = dataSource.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+        ) {
+            LocalDate today = LocalDate.now();
+            LocalDate returnDate = today.plusDays(14); // 기본 대출 기간 14일
+
+            pstmt.setInt(1, bookId);
+            pstmt.setInt(2, userId);
+            pstmt.setDate(3, Date.valueOf(today));
+            pstmt.setDate(4, Date.valueOf(returnDate));
+            pstmt.setString(5, "대출중");
+
+            result = pstmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+	
+	
+	
 	/**
 	 * 제목이나 작가명으로 도서 목록 조회 
 	 * @param keyword 검색어
@@ -435,8 +468,62 @@ public class BookDAO {
 	 * @param bookId
 	 * @return 도서 한 권 BookVO
 	 */
-	public BookVO selectBookById(int bookId) {
+	public BookWithCategoryVO selectBookById(int bookId) {
 		
+		Connection con = null;
+		BookWithCategoryVO book = new BookWithCategoryVO();
+		
+	    String sql = "SELECT "
+	               + "  book_id AS bookId, "
+	               + "  category_id AS categoryId, "
+	               + "  category_name AS categoryName, "
+	               + "  title, "
+	               + "  author, "
+	               + "  publisher, "
+	               + "  total_count AS totalCount, "
+	               + "  create_at AS createAt,"
+	               + "  image_url "
+	               + "FROM book_with_category_view "
+	               + "WHERE book_id = ?";
+	    
+	    try {
+		    con = dataSource.getConnection();
+	        PreparedStatement stmt = con.prepareStatement(sql);
+	    	stmt.setInt(1, bookId);
+	        ResultSet rs = stmt.executeQuery();
+
+	        if (rs.next()) {
+	            
+	            book.setBookId(rs.getInt("bookId"));
+	            book.setCategoryId(rs.getInt("categoryId"));
+	            book.setCategoryName(rs.getString("categoryName"));
+	            book.setTitle(rs.getString("title"));
+	            book.setAuthor(rs.getString("author"));
+	            book.setPublisher(rs.getString("publisher"));
+	            book.setTotalCount(rs.getInt("totalCount"));
+	            book.setCreateAt(rs.getDate("createAt"));
+	            book.setImageUrl(rs.getString("image_url"));
+	            
+	        }
+	    } catch (SQLException e) {
+	        throw new RuntimeException("❌ 해당 ID의 도서가 존재하지 않습니다.");
+	    }finally {
+	    	if (con != null) {
+	            try {
+	                con.close();
+	            } catch (Exception e) {
+	            	e.printStackTrace();
+	            }
+	        }
+		}
+	    
+	    return book;
+	}
+
+
+
+
+	public BookVO selectBookVOById(int bookId) {
 		Connection con = null;
 		BookVO book = new BookVO();
 		
@@ -463,7 +550,6 @@ public class BookDAO {
 	            
 	            book.setBookId(rs.getInt("bookId"));
 	            book.setCategoryId(rs.getInt("categoryId"));
-//	            book.setCategoryName(rs.getInt("categoryName"));
 	            book.setTitle(rs.getString("title"));
 	            book.setAuthor(rs.getString("author"));
 	            book.setPublisher(rs.getString("publisher"));
@@ -486,11 +572,6 @@ public class BookDAO {
 	    
 	    return book;
 	}
-
-	
-	
-	
-	
 	
 	
 

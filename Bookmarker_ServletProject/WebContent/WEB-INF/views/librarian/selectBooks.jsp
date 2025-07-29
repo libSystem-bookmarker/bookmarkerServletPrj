@@ -10,6 +10,11 @@
 <title>BOOKMARK</title>
 
  <style>
+ 
+ 		body{
+ 			display:flex;
+ 			justify-content: space-between;
+ 		}
 
         header{
         	position: fixed;
@@ -17,6 +22,11 @@
 		      left: 0;
 		      width: 100%;
 		      z-index: 1000;
+        }
+        
+        footer{
+
+        	bottom:0;
         }
 
         .container {
@@ -209,7 +219,7 @@
 <!-- 	categoryId를 받으면 선택한 categoryId를 서블릿에서 
 		그러면 category..Controller를 /경로 으로 연결해줘야 하는데  -->
 	  <c:forEach var="book" items="${books}">
-	    <div class="book-card">
+	    <div class="book-card" onclick="goToDetail(${book.bookId})" style="cursor: pointer;">
 	    	 <div style="display: flex; justify-content: space-between; margin-bottom:10px">
 		      	<a href="/insertBookform.do?bookId=${book.bookId}" class="img-button">
 				  <img src="../../resources/img/Edit.png" alt="수정 아이콘" />
@@ -257,4 +267,12 @@
 </main>
 <footer> <%@ include file="/WEB-INF/views/common/footer.jsp" %> </footer>
 </body>
+
+<script>
+	function goToDetail(bookId) {
+    window.location.href = '/selectBookDetail.do?bookId=' + bookId;
+  }
+</script>
+
+
 </html>

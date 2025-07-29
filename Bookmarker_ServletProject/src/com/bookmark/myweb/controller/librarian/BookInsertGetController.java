@@ -29,7 +29,7 @@ public class BookInsertGetController implements CommandController {
 		BookVO book = new BookVO();
 		if(updateBookId != null) {
 			int bookId = Integer.parseInt(updateBookId);
-			book = bookService.selectBookById(bookId);
+			book = bookService.selectBookVOById(bookId);
 			request.setAttribute("book", book);
 		}else {
 			
