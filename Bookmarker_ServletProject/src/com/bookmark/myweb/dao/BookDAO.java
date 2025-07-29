@@ -443,11 +443,13 @@ public class BookDAO {
 	    String sql = "SELECT "
 	               + "  book_id AS bookId, "
 	               + "  category_id AS categoryId, "
+	               + "  category_name AS categoryName, "
 	               + "  title, "
 	               + "  author, "
 	               + "  publisher, "
 	               + "  total_count AS totalCount, "
-	               + "  create_at AS createAt "
+	               + "  create_at AS createAt,"
+	               + "  image_url "
 	               + "FROM book_with_category_view "
 	               + "WHERE book_id = ?";
 	    
@@ -461,11 +463,13 @@ public class BookDAO {
 	            
 	            book.setBookId(rs.getInt("bookId"));
 	            book.setCategoryId(rs.getInt("categoryId"));
+//	            book.setCategoryName(rs.getInt("categoryName"));
 	            book.setTitle(rs.getString("title"));
 	            book.setAuthor(rs.getString("author"));
 	            book.setPublisher(rs.getString("publisher"));
 	            book.setTotalCount(rs.getInt("totalCount"));
 	            book.setCreateAt(rs.getDate("createAt"));
+	            book.setImageUrl(rs.getString("image_url"));
 	            
 	        }
 	    } catch (SQLException e) {
