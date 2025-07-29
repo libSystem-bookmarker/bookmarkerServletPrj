@@ -106,4 +106,8 @@ public class AdminMemberService {
 	public String findPassword(int userId) {
 		 return adminMemberDAO.getPassword(String.valueOf(userId));
 	}
+
+	public MemberVO selectMemberInfo(int userId) {
+		return adminMemberDAO.selectMemberInfo(userId);
+	}
 }
