@@ -70,8 +70,8 @@ public class MemberUpdatePostController implements CommandController {
 //	                profileService.saveProfile(profile);
 //	            }
 	         // 회원 정보 수정 완료 후
-	            MemberVO updatedMember = memberService.getMemberById(userId); // DB에서 다시 조회
-	            session.setAttribute("loginMember", updatedMember);           // 세션 갱신
+	           // MemberVO updatedMember = memberService. // DB에서 다시 조회
+	           // session.setAttribute("loginMember", updatedMember);           // 세션 갱신
 
 
 	    } catch (Exception e) {
