@@ -1,9 +1,12 @@
 package com.bookmark.myweb.controller.librarian;
 
+import java.io.IOException;
 import java.sql.Date;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import com.bookmark.myweb.common.CommandController;
 import com.bookmark.myweb.model.BookVO;
@@ -23,6 +26,35 @@ public class BookInsertPostController implements CommandController {
 		String totalCount = request.getParameter("totalCount");
 		String createAt = request.getParameter("createAt");
 		String categoryId = request.getParameter("categoryId");
+//		Part filePart;
+//		try {
+//			filePart = request.getPart("imageFile");
+//			System.out.println("filePart: " + filePart);
+//		} catch (IOException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		} catch (ServletException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+		
+		
+		
+		String imageUrl="";
+			
+//			String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();	
+//			
+//			String uploadPath = request.getServletContext().getRealPath("/resources/img/");
+//	        File uploadDir = new File(uploadPath);
+//	        if (!uploadDir.exists()) uploadDir.mkdirs();
+//	        
+//	        // 파일 저장
+//	        String savedFileName = UUID.randomUUID() + "_" + fileName; // 중복 방지
+//	        filePart.write(uploadPath + File.separator + savedFileName);
+//
+//	        // DB에 저장할 상대 경로
+//	        imageUrl = "../../resources/img/" + savedFileName;
+	        
 		
 		
 		// BookVO 객체 생성 및 값 세팅
@@ -34,12 +66,14 @@ public class BookInsertPostController implements CommandController {
 		book.setCategoryId(Integer.parseInt(categoryId));
 		// 날짜는 java.sql.Date로 변환
 		book.setCreateAt(Date.valueOf(createAt));
+//		book.setImageUrl(imageUrl);
 		
-		bookService.insertBook(book);
+//		bookService.insertBook(book);
 		
 		// 등록 실패 시 다시 등록 페이지로 /insertBookform.do
 		
 		return "redirect:/selectBooks.do";
+
 	}
 
 }

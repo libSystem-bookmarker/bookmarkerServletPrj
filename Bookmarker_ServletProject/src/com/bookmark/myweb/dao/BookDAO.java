@@ -43,8 +43,12 @@ public class BookDAO {
         int result1 = 0;
         int result2 = 0;
         
+        
+        
         try {
         	con = dataSource.getConnection();
+        	con.setAutoCommit(false);  // 수동 커밋
+
         	
         	 // 1. book_loan_detail 테이블에 반납 처리
             String updateLoanSQL = "UPDATE book_loan_detail " +
@@ -65,26 +69,26 @@ public class BookDAO {
             	stmt2.setInt(1, bookId);
             	result2 = stmt2.executeUpdate();
             	
-            	con.commit(); 
+            	con.commit(); // 모든 쿼리 성공 시 커밋
+            }else {
+            	con.rollback(); // 첫 번째 쿼리 실패 시 롤백
             }
-            	
-            	
 
-            	
             }catch (SQLException e) {
                 e.printStackTrace();
+                try {
+                    if (con != null) con.rollback();
+                } catch (SQLException rollbackEx) {
+                    rollbackEx.printStackTrace();
+                }
             } finally {
-            	 try {
-					con.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
+                try { if (stmt2 != null) stmt2.close(); } catch (SQLException e) { e.printStackTrace(); }
+                try { if (stmt1 != null) stmt1.close(); } catch (SQLException e) { e.printStackTrace(); }
+                try { if (con != null) con.close(); } catch (SQLException e) { e.printStackTrace(); }
             }
-            
-        return result2;
-	}
+
+            return result2; // or result1 to check if 반납 처리되었는지
+        }
 	
 	
 	
@@ -294,6 +298,7 @@ public class BookDAO {
 	        stmt.setString(5, book.getPublisher());
 	        stmt.setInt(6, book.getTotalCount());
 	        stmt.setDate(7, (Date) book.getCreateAt());
+//	        stmt.setString(8,  book.getImageUrl());
 	        
 	        rowCount = stmt.executeUpdate();
 	        

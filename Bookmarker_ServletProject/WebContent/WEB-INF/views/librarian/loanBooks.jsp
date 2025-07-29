@@ -109,6 +109,12 @@
 	  border-radius: 8px;
 	  cursor: pointer;
     }
+    
+    
+    a.btn {
+	  text-decoration: none;
+	}
+    
 
     .btn.return {
       background-color: #2968C2;
@@ -263,11 +269,13 @@
 
               <td>
                 <c:if test="${empty loan.dueDate}">
-                  <button class="btn return">반납</button>
+                  <button class="btn return"
+                  onclick="openReturnModal(${loan.bookLoanDetailId}, ${loan.bookId})"
+                  >반납</button>
                   <button class="btn extend">연장</button>
                 </c:if>
               </td>
-              
+        
             </tr>
           </c:forEach>
         </tbody>
@@ -276,16 +284,23 @@
   </div>
   
   
-  
   <!-- 반납 모달 알림창 -->
   <div id="returnModal" class="modal" style="display: none;">
+	  <form id="returnForm" method="post" action="/updateReturnBook.do">
 	  <div class="modal-content">
-	    <p>정말 반납 처리하시겠습니까?</p>
+	    <p>정말 반납하시겠습니까?</p>
+	    <input type="hidden" name="bookLoanDetailId" id="modalLoanId">
+	    <input type="hidden" name="bookId" id="modalBookId">
 	    <div class="modal-buttons">
-	      <button id="confirmReturn" class="btn">확인</button>
-	      <button id="cancelReturn" class="btn">취소</button>
+	      <button type="submit" id="confirmReturn" class="btn"
+	      onclick="submitReturn()"
+	      >확인</button>
+	      <button id="cancelReturn" type="button" class="btn"
+	      onclick="closeModal()"
+	      >취소</button>
 	    </div>
 	  </div>
+	  </form>
   </div>
   
   
@@ -299,23 +314,37 @@
 	    </div>
 	  </div>
 	</div>
-  
-  
-  
-  
-  
+
+
 </body>
 
 
 	
 <script>
+
+function openReturnModal(loanId, bookId) {
+	  document.getElementById("modalLoanId").value = loanId;
+	  document.getElementById("modalBookId").value = bookId;
+	  document.getElementById("returnModal").style.display = "flex";
+	}
+	
+
+function closeModal() {
+  document.getElementById("returnModal").style.display = "none";
+}
+
+
+function submitReturn() {
+	 document.getElementById("returnForm").submit();
+}
+
+
 document.addEventListener("DOMContentLoaded", function () {
   const returnModal = document.getElementById("returnModal");
   const extendModal = document.getElementById("extendModal");
 
   // 버튼에 정확히 클릭 이벤트만 걸기 (아이콘 영역 문제 방지)
-  document.querySelectorAll(".btn.
-").forEach(btn => {
+  document.querySelectorAll(".btn.return").forEach(btn => {
     btn.addEventListener("click", (e) => {
       if (e.currentTarget === btn) {
         extendModal.style.display = "none";
@@ -335,11 +364,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // 반납 모달 확인 / 취소
   document.getElementById("confirmReturn").addEventListener("click", () => {
-    returnModal.style.display = "none";
+    submitReturn();
     alert("반납 처리되었습니다.");
   });
   document.getElementById("cancelReturn").addEventListener("click", () => {
-    returnModal.style.display = "none";
+	  closeModal();
   });
 
   // 연장 모달 확인 / 취소
@@ -356,7 +385,10 @@ document.addEventListener("DOMContentLoaded", function () {
     if (e.target === returnModal) returnModal.style.display = "none";
     if (e.target === extendModal) extendModal.style.display = "none";
   });
+  
 });
+
+
 </script>
 
 

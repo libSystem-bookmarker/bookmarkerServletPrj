@@ -17,6 +17,8 @@ public class BookService {
 		
 		int updateRow = dao.updateReturnBookById(bookLoanDetailId, bookId);
 		
+		System.out.println("updateRow: " + updateRow);
+		
 		if(updateRow <= 0) {
 			throw new RuntimeException("❌ 도서 반납을 실패했습니다.");
 		}

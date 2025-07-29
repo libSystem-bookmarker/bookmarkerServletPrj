@@ -18,5 +18,6 @@ public class BookVO {
 	private String publisher; //출판사
 	private int totalCount; //소장 책 수량
 	private Date createAt; //출판일
+	private String imageUrl; // 이미지 path 추가
 
 }
