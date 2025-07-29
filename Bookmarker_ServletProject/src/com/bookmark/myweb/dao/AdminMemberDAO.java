@@ -284,7 +284,6 @@ public class AdminMemberDAO {
 	}
 
 
-=======
 	
 	public void updateAdminMember(int userId, String name, String role, String phone, String email, String address, int unitId) {
 	    String sql = "UPDATE MEMBER SET NAME=?, ROLE=?, PHONE_NUMBER=?, EMAIL=?, ADDRESS=?, UNIT_ID=? WHERE USER_ID=?";
@@ -329,6 +328,4 @@ public class AdminMemberDAO {
 		}
 		return 0;
 	}
-
->>>>>>> feat/member/updateInfo
 }
