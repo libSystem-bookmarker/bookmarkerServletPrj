@@ -79,6 +79,7 @@ public class AdminMemberService {
 	public List<MemberVO> selectRoleMembers(String role) {
 		return adminMemberDAO.selectRoleMembers(role);
 	}
+<<<<<<< HEAD
 
 	// 관리자 수정
 	public void updateAdminMember(int userId, String name, String role, String phone, String email, String address, int unitId) {
@@ -97,4 +98,15 @@ public class AdminMemberService {
 	}
 
 
+=======
+	
+	/**
+	 * @author bs.kim
+	 * @param userId
+	 * @return 사용자의 비밀번호 반환 (비밀번호 찾기용)
+	 */
+	public String findPassword(int userId) {
+		 return adminMemberDAO.getPassword(String.valueOf(userId));
+	}
+>>>>>>> dev
 }

@@ -31,7 +31,10 @@
             <input type="submit" value="로그인">
         </div>
     </form>
-    <div class="search-pw"><a href="">비밀번호 찾기</a></div>
+   <div class="search-pw">
+  <a href="${pageContext.request.contextPath}/findpwform.do">비밀번호 찾기</a>
+</div>
+
 </div>
 </section>
 </main>
