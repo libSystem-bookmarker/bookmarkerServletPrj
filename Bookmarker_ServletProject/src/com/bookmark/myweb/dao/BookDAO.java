@@ -46,7 +46,7 @@ public class BookDAO {
 	               + "  book_id AS bookId, "
 	               + "  category_id AS categoryId, "
 	               + "  category_name AS categoryName, "
-	               + "  title, author, publisher, total_count, create_at "
+	               + "  title, author, publisher, total_count, create_at, image_url "
 	               + "FROM book_with_category_view "
 	               + "WHERE LOWER(title) LIKE ? OR LOWER(author) LIKE ?";
 
@@ -70,7 +70,8 @@ public class BookDAO {
 	                    rs.getString("author"),
 	                    rs.getString("publisher"),
 	                    rs.getInt("total_count"),
-	                    rs.getDate("create_at")
+	                    rs.getDate("create_at"),
+	                    rs.getString("image_url")
 	                );
 	                bookList.add(book);
 	            }
@@ -100,7 +101,8 @@ public class BookDAO {
 	               + "  author AS author, "
 	               + "  publisher AS publisher, "
 	               + "  total_count AS totalCount, "
-	               + "  create_at AS createAt "
+	               + "  create_at AS createAt,"
+	               + "	image_url "
 	               + "FROM book_with_category_view "
 	               + "WHERE category_id = ?";
 
@@ -122,7 +124,8 @@ public class BookDAO {
 	                    rs.getString("author"),
 	                    rs.getString("publisher"),
 	                    rs.getInt("totalCount"),
-	                    rs.getDate("createAt")
+	                    rs.getDate("createAt"),
+	                    rs.getString("image_url")
 	                );
 	                bookList.add(book);
 	            }
@@ -320,7 +323,7 @@ public class BookDAO {
 	    try {
 	        con = dataSource.getConnection();
 	        String sql = "SELECT book_id AS bookId, category_id AS categoryId, category_name AS categoryName, "
-	                   + "title AS title, author AS author, publisher AS publisher, total_count AS totalCount, create_at AS createAt "
+	                   + "title AS title, author AS author, publisher AS publisher, total_count AS totalCount, create_at AS createAt, image_url AS imageUrl  "
 	                   + "FROM book_with_category_view ORDER BY book_id";
 
 	        PreparedStatement stmt = con.prepareStatement(sql);
@@ -335,7 +338,8 @@ public class BookDAO {
 	                rs.getString("author"),
 	                rs.getString("publisher"),
 	                rs.getInt("totalCount"),
-	                rs.getDate("createAt")
+	                rs.getDate("createAt"),
+	                rs.getString("imageUrl")
 	            ));
 	        }
 
@@ -390,7 +394,7 @@ public class BookDAO {
 	 */
 	public int insertBook(BookVO book) {
 	    Connection con = null;
-	    String sql = "INSERT INTO book VALUES (?, ?, ?, ?, ?, ?, ?)";
+	    String sql = "INSERT INTO book VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 	    
 	    int rowCount = 0;
 	    try {
@@ -404,7 +408,7 @@ public class BookDAO {
 	        stmt.setString(5, book.getPublisher());
 	        stmt.setInt(6, book.getTotalCount());
 	        stmt.setDate(7, (Date) book.getCreateAt());
-//	        stmt.setString(8,  book.getImageUrl());
+	        stmt.setString(8,  book.getImageUrl());
 	        
 	        rowCount = stmt.executeUpdate();
 	        

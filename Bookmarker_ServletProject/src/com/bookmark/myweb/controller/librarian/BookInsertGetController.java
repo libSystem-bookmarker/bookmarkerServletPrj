@@ -36,8 +36,8 @@ public class BookInsertGetController implements CommandController {
 		}
 
 		
-//		return "librarian/insertBookform.jsp";
-		return "librarian/insertTest.jsp";
+		return "librarian/insertBookform.jsp";
+
 	}
 
 }

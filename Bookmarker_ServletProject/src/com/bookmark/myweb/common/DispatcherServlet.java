@@ -9,6 +9,7 @@ import java.util.Properties;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +21,12 @@ import com.bookmark.myweb.controller.common.ErrorController;
  * @author yeonsoo
  * @create 2025.07.04 uri, class 매핑
  */
+@MultipartConfig(  // 이거 추가를 httpServlet을 상속받는 서블릿에 해야한다고 한다..
+//	    location = "C:/upload/book",              // 업로드 임시 경로
+	    maxFileSize = 10 * 1024 * 1024,          // 10MB
+	    maxRequestSize = 20 * 1024 * 1024,       // 20MB
+	    fileSizeThreshold = 1024                // 1KB 메모리 버퍼
+	)
 public class DispatcherServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

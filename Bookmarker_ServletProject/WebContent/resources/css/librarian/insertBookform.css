@@ -5,17 +5,20 @@
       background-color: #f8f9fa;
     }
 
-    header {
-      background-color: #193F75;
-      color: white;
-      padding: 20px;
-      font-size: 24px;
-      font-weight: bold;
-    }
+
+    
+    header{
+       	position: fixed;
+	      top: 0;
+	      left: 0;
+	      width: 100%;
+	      z-index: 1000;
+        }
+
 
     .container {
       max-width: 800px;
-      margin: 30px auto;
+      margin: 60px auto;
       background-color: white;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
@@ -23,8 +26,8 @@
     }
 
     .image-preview {
-  margin-top: 10px;
-  text-align: center;
+	  margin-top: 10px;
+	  text-align: center;
 }
 
 .image-box {

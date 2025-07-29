@@ -1,30 +1,36 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-<link href="https://hangeul.pstatic.net/hangeul_static/css/maru-buri.css" rel="stylesheet">
-<link rel="stylesheet" href="/resources/css/common/common.css">
-<meta charset="UTF-8">
-<title>BOOKMARK</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>도서 목록 - 도서관 관리 시스템</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
- <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9fafb;
+            color: #374151;
+        }
 
-        header{
-        	position: fixed;
-		      top: 0;
-		      left: 0;
-		      width: 100%;
-		      z-index: 1000;
+        .header {
+            background-color: #193f75;
+            color: white;
+            padding: 1rem;
+            text-align: center;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem 1rem;
-            margin-top: 60px;
-            flex: 1;
         }
 
         .search-bar {
@@ -173,17 +179,13 @@
         
         
     </style>
-
-
-
-
 </head>
 <body>
-<header> <%@ include file="/WEB-INF/views/common/header.jsp" %> </header>
-<main>
-<section class="content">
+    <div class="header">
+        <h2>도서 관리 시스템</h2>
+    </div>
 
- <div class="container">
+    <div class="container">
 
     	<form method="get" action="/selectBooks.do" id="filterForm">
         <div class="search-bar">
@@ -220,7 +222,7 @@
 	  		</div>
 	    
 	    
-	      <img src="${book.imageUrl}" class="book-image">
+	      <img src="../../resources/img/book1.jpg" class="book-image">
 	      <div class="book-title">${book.title}</div>
 	      <div class="book-author">${book.author}</div>
 	      <div class="book-publisher">${book.publisher}</div>
@@ -252,9 +254,5 @@
         </c:if>
     </div>
 
-
-</section>
-</main>
-<footer> <%@ include file="/WEB-INF/views/common/footer.jsp" %> </footer>
 </body>
 </html>
