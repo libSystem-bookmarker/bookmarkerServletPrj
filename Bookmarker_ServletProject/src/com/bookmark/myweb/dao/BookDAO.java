@@ -5,6 +5,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,7 @@ import javax.sql.DataSource;
 
 import com.bookmark.myweb.model.BookVO;
 import com.bookmark.myweb.model.BookWithCategoryVO;
+import com.bookmark.myweb.model.BookWithLoanVO;
 import com.bookmark.myweb.model.CategoryVO;
 
 public class BookDAO {
@@ -29,6 +32,107 @@ public class BookDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
+	public int updateReturnBookById(int bookLoanDetailId, int bookId) {
+		
+		Connection con = null;
+        PreparedStatement stmt1 = null;
+        PreparedStatement stmt2 = null;
+        int result1 = 0;
+        int result2 = 0;
+        
+        try {
+        	con = dataSource.getConnection();
+        	
+        	 // 1. book_loan_detail 테이블에 반납 처리
+            String updateLoanSQL = "UPDATE book_loan_detail " +
+                                   "SET due_date = SYSDATE, " +
+                                   "    loan_status = '반납완료' " +
+                                   "WHERE book_loan_detail_id = ?";
+            
+            stmt1 = con.prepareStatement(updateLoanSQL);
+            stmt1.setInt(1, bookLoanDetailId);
+            result1 = stmt1.executeUpdate();
+            
+            if(result1 > 0) {
+            	String updateBookSQL = "UPDATE book " +
+                        "SET total_count = total_count + 1 " +
+                        "WHERE book_id = ?";
+
+            	stmt2 = con.prepareStatement(updateBookSQL);
+            	stmt2.setInt(1, bookId);
+            	result2 = stmt2.executeUpdate();
+            	
+            	con.commit(); 
+            }
+            	
+            	
+
+            	
+            }catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+            	 try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+            }
+            
+        return result2;
+	}
+	
+	
+	
+	
+	public List<BookWithLoanVO> selectAllLoanBooks() {
+	    List<BookWithLoanVO> bookWithLoans = new ArrayList<>();
+
+	    String sql = "SELECT * FROM view_book_with_loan";
+
+	    try (Connection con = dataSource.getConnection();
+	         PreparedStatement stmt = con.prepareStatement(sql);
+	         ResultSet rs = stmt.executeQuery()) {
+
+	        while (rs.next()) {
+	            BookWithLoanVO vo = new BookWithLoanVO();
+
+	            vo.setBookId(rs.getInt("book_id"));
+	            vo.setTitle(rs.getString("title"));
+//	            vo.setAuthor(rs.getString("author"));
+//	            vo.setPublisher(rs.getString("publisher"));
+//	            vo.setTotalCount(rs.getInt("total_count"));
+//	            vo.setCategoryId(rs.getInt("category_id"));
+//	            vo.setCreateAt(rs.getDate("create_at"));
+
+	            vo.setBookLoanDetailId(rs.getInt("book_loan_detail_id"));
+	            vo.setUserId(rs.getInt("user_id"));
+	            vo.setUserName(rs.getString("user_name"));
+	            vo.setLoanDate(rs.getDate("loan_date"));
+	            vo.setReturnDate(rs.getDate("return_date"));
+	            vo.setDueDate(rs.getDate("due_date"));
+	            vo.setLoanStatus(rs.getString("loan_status"));
+	            
+	            
+	    		// 연체일 계산
+    			int daysOver = (int) ChronoUnit.DAYS.between(vo.getReturnDate().toLocalDate(), LocalDate.now());
+    			vo.setDaysOver(daysOver);
+
+	            
+	            bookWithLoans.add(vo);
+	        }
+
+	    } catch (SQLException e) {
+	        throw new RuntimeException("📛 대출 내역 조회 중 오류 발생", e);
+	    }
+
+	    return bookWithLoans;
+	}
+	
 	
 	
 	
