@@ -1,0 +1,105 @@
+# CREATE TABLE
+CREATE SEQUENCE book_loan_detail_seq
+    START WITH 1
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE;
+    
+    
+drop table book_loan_detail;
+
+CREATE TABLE book_loan_detail (
+    book_loan_detail_id   INT PRIMARY KEY,
+    book_id               INT NOT NULL,
+    user_id               INT NOT NULL,
+    loan_date             DATE NOT NULL,      -- 대출한 날
+    return_date           DATE,               -- 반납 예정일
+    due_date              DATE,               -- 실제 반납일
+    loan_status           VARCHAR2(20),       -- 대출 상태: 대출중, 반납완료, 연체 등
+    days_over             INT
+
+    CONSTRAINT fk_loan_detail_book
+        FOREIGN KEY (book_id)
+        REFERENCES book(book_id),
+
+    CONSTRAINT fk_loan_detail_user
+        FOREIGN KEY (user_id)
+        REFERENCES member(user_id)
+);
+
+
+# INSERT
+-- ① 대출 중 (아직 반납 안 함)
+INSERT INTO book_loan_detail (
+    book_loan_detail_id, book_id, user_id, loan_date, return_date, due_date, loan_status
+) VALUES (
+    1, 2, 2, TO_DATE('2025-07-15', 'YYYY-MM-DD'), TO_DATE('2025-07-29', 'YYYY-MM-DD'), NULL, '대출중'
+);
+
+-- ② 정상 반납 (제때 반납함)
+INSERT INTO book_loan_detail (
+    book_loan_detail_id, book_id, user_id, loan_date, return_date, due_date, loan_status
+) VALUES (
+    2, 3, 4, TO_DATE('2025-06-10', 'YYYY-MM-DD'), TO_DATE('2025-06-24', 'YYYY-MM-DD'), TO_DATE('2025-06-22', 'YYYY-MM-DD'), '반납완료'
+);
+
+-- ③ 연체 후 반납 (예정일보다 늦게 반납)
+INSERT INTO book_loan_detail (
+    book_loan_detail_id, book_id, user_id, loan_date, return_date, due_date, loan_status
+) VALUES (
+    3, 4, 3, TO_DATE('2025-06-01', 'YYYY-MM-DD'), TO_DATE('2025-06-25', 'YYYY-MM-DD'), TO_DATE('2025-06-20', 'YYYY-MM-DD'), '연체'
+);
+
+-- ④ 연체 중 (아직 반납 안 함, 예정일은 지남)
+INSERT INTO book_loan_detail (
+    book_loan_detail_id, book_id, user_id, loan_date, return_date, due_date, loan_status
+) VALUES (
+    4, 5, 2, TO_DATE('2025-07-01', 'YYYY-MM-DD'), TO_DATE('2025-07-15', 'YYYY-MM-DD'), NULL, '연체'
+);
+
+
+commit;
+
+
+# CREATE VIEW -- 조회용
+drop view view_book_with_loan;
+
+commit;
+
+CREATE OR REPLACE VIEW view_book_with_loan AS
+SELECT
+    b.book_id,
+    b.title,
+    b.author,
+    b.publisher,
+    b.total_count,
+    b.category_id,
+    b.create_at,
+    l.book_loan_detail_id,
+    l.user_id,
+    m.name AS user_name,         -- 회원 이름
+    l.loan_date, -- 대출한 날
+    l.return_date, -- 반납 예정일
+    l.due_date, -- 실제 반납일
+    l.loan_status, -- 대출, 반납 여부, 연체
+    l.days_over -- 남은 일수(반납 or 연체)
+FROM
+    book b
+INNER JOIN
+    book_loan_detail l
+    ON b.book_id = l.book_id
+INNER JOIN
+    member m
+    ON l.user_id = m.user_id;
+
+
+
+select * from view_book_with_loan;
+
+commit;
+
+
+
+# UPDATE
+
+# DELETE

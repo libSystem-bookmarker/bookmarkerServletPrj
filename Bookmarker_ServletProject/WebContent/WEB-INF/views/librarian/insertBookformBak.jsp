@@ -1,21 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-<link href="https://hangeul.pstatic.net/hangeul_static/css/maru-buri.css" rel="stylesheet">
-<link rel="stylesheet" href="/resources/css/common/common.css">
-<link rel="stylesheet" href="../../resources/css/librarian/insertBookform.css" />
-<meta charset="UTF-8">
-<title>BOOKMARK</title>
+  <meta charset="UTF-8" />
+  <title>📚 도서 등록</title>
+  <link rel="stylesheet" href="../../resources/css/librarian/insertBookform.css" />
 </head>
 <body>
-<header> <%@ include file="/WEB-INF/views/common/header.jsp" %> </header>
-<main>
-<section class="content">
+  <header>📚 도서 관리 시스템</header>
 
-<!-- 등록 / 수정 구분 -->
+  <!-- 등록 / 수정 구분 -->
   <c:choose>
     <c:when test="${empty book.bookId}">
       <c:url var="book_do" value="/insertBook.do" />
@@ -26,8 +22,7 @@
   </c:choose>
 
   <form action="${book_do}" method="post" class="container" enctype="multipart/form-data">
-<%--     <form action="${book_do}" method="post" class="container">
- --%>  <div class="form-header">
+    <div class="form-header">
       <div style="font-weight: bold; font-size: 20px; margin-bottom: 10px;">
         <c:choose>
           <c:when test="${empty book.bookId}">+ 도서 등록 신청서</c:when>
@@ -102,7 +97,7 @@
 
     <input type="hidden" name="bookId" value="${book.bookId}" />
 
-    <div style="text-align: center; display: flex">
+    <div style="text-align: center;">
       <c:choose>
         <c:when test="${empty book.bookId}">
           <button type="submit" class="submit-btn">도서 등록하기</button>
@@ -134,10 +129,5 @@
       }
     });
   </script>
-
-
-</section>
-</main>
-<footer> <%@ include file="/WEB-INF/views/common/footer.jsp" %> </footer>
 </body>
-</html></html>
+</html>

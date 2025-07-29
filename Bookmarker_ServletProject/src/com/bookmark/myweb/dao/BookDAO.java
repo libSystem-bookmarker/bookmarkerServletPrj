@@ -35,6 +35,115 @@ public class BookDAO {
 	
 	
 	
+	/**
+	 * 제목이나 작가명으로 도서 목록 조회 
+	 * @param keyword 검색어
+	 * @return keyword를 포함한 도서 목록 List<BookWithCategoryVO>
+	 */
+	public List<BookWithCategoryVO> selectSearchBooks(String keyword) {
+
+	    String sql = "SELECT "
+	               + "  book_id AS bookId, "
+	               + "  category_id AS categoryId, "
+	               + "  category_name AS categoryName, "
+	               + "  title, author, publisher, total_count, create_at, image_url "
+	               + "FROM book_with_category_view "
+	               + "WHERE LOWER(title) LIKE ? OR LOWER(author) LIKE ?";
+
+	    List<BookWithCategoryVO> bookList = new ArrayList<>();
+	    String searchPattern = "%" + keyword.toLowerCase() + "%";
+
+	    try (
+	        Connection con = dataSource.getConnection();
+	        PreparedStatement stmt = con.prepareStatement(sql);
+	    ) {
+	        stmt.setString(1, searchPattern);
+	        stmt.setString(2, searchPattern);
+
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            while (rs.next()) {
+	                BookWithCategoryVO book = new BookWithCategoryVO(
+	                    rs.getInt("bookId"),
+	                    rs.getInt("categoryId"),
+	                    rs.getString("categoryName"),
+	                    rs.getString("title"),
+	                    rs.getString("author"),
+	                    rs.getString("publisher"),
+	                    rs.getInt("total_count"),
+	                    rs.getDate("create_at"),
+	                    rs.getString("image_url")
+	                );
+	                bookList.add(book);
+	            }
+	        }
+
+	    } catch (SQLException e) {
+	        throw new RuntimeException("🔍 도서 검색 중 오류 발생", e);
+	    }
+
+	    return bookList;
+	}
+
+	
+	
+	
+	/**
+	 * 카테고리별 도서 목록 조회
+	 * @param categoryId 카테고리 ID
+	 * @return 카테고리별 도서 목록 List<BookWithCategoryVO>
+	 */
+	public List<BookWithCategoryVO> selectBooksByCategory(int categoryId) {
+	    String sql = "SELECT "
+	               + "  book_id AS bookId, "
+	               + "  category_id AS categoryId, "
+	               + "  category_name AS categoryName, "
+	               + "  title AS title, "
+	               + "  author AS author, "
+	               + "  publisher AS publisher, "
+	               + "  total_count AS totalCount, "
+	               + "  create_at AS createAt,"
+	               + "	image_url "
+	               + "FROM book_with_category_view "
+	               + "WHERE category_id = ?";
+
+	    List<BookWithCategoryVO> bookList = new ArrayList<>();
+
+	    try (
+	        Connection con = dataSource.getConnection();
+	        PreparedStatement stmt = con.prepareStatement(sql);
+	    ) {
+	        stmt.setInt(1, categoryId);
+
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            while (rs.next()) {
+	                BookWithCategoryVO book = new BookWithCategoryVO(
+	                    rs.getInt("bookId"),
+	                    rs.getInt("categoryId"),
+	                    rs.getString("categoryName"),
+	                    rs.getString("title"),
+	                    rs.getString("author"),
+	                    rs.getString("publisher"),
+	                    rs.getInt("totalCount"),
+	                    rs.getDate("createAt"),
+	                    rs.getString("image_url")
+	                );
+	                bookList.add(book);
+	            }
+	        }
+
+	    } catch (SQLException e) {
+	        throw new RuntimeException("카테고리별 도서 조회 중 오류 발생", e);
+	    }
+
+	    return bookList;
+	}
+
+	
+	
+	
+	
+	
+	
 	public int updateReturnBookById(int bookLoanDetailId, int bookId) {
 		
 		Connection con = null;
@@ -43,8 +152,12 @@ public class BookDAO {
         int result1 = 0;
         int result2 = 0;
         
+        
+        
         try {
         	con = dataSource.getConnection();
+        	con.setAutoCommit(false);  // 수동 커밋
+
         	
         	 // 1. book_loan_detail 테이블에 반납 처리
             String updateLoanSQL = "UPDATE book_loan_detail " +
@@ -65,26 +178,26 @@ public class BookDAO {
             	stmt2.setInt(1, bookId);
             	result2 = stmt2.executeUpdate();
             	
-            	con.commit(); 
+            	con.commit(); // 모든 쿼리 성공 시 커밋
+            }else {
+            	con.rollback(); // 첫 번째 쿼리 실패 시 롤백
             }
-            	
-            	
 
-            	
             }catch (SQLException e) {
                 e.printStackTrace();
+                try {
+                    if (con != null) con.rollback();
+                } catch (SQLException rollbackEx) {
+                    rollbackEx.printStackTrace();
+                }
             } finally {
-            	 try {
-					con.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
+                try { if (stmt2 != null) stmt2.close(); } catch (SQLException e) { e.printStackTrace(); }
+                try { if (stmt1 != null) stmt1.close(); } catch (SQLException e) { e.printStackTrace(); }
+                try { if (con != null) con.close(); } catch (SQLException e) { e.printStackTrace(); }
             }
-            
-        return result2;
-	}
+
+            return result2; // or result1 to check if 반납 처리되었는지
+        }
 	
 	
 	
@@ -210,7 +323,7 @@ public class BookDAO {
 	    try {
 	        con = dataSource.getConnection();
 	        String sql = "SELECT book_id AS bookId, category_id AS categoryId, category_name AS categoryName, "
-	                   + "title AS title, author AS author, publisher AS publisher, total_count AS totalCount, create_at AS createAt "
+	                   + "title AS title, author AS author, publisher AS publisher, total_count AS totalCount, create_at AS createAt, image_url AS imageUrl  "
 	                   + "FROM book_with_category_view ORDER BY book_id";
 
 	        PreparedStatement stmt = con.prepareStatement(sql);
@@ -225,7 +338,8 @@ public class BookDAO {
 	                rs.getString("author"),
 	                rs.getString("publisher"),
 	                rs.getInt("totalCount"),
-	                rs.getDate("createAt")
+	                rs.getDate("createAt"),
+	                rs.getString("imageUrl")
 	            ));
 	        }
 
@@ -280,7 +394,7 @@ public class BookDAO {
 	 */
 	public int insertBook(BookVO book) {
 	    Connection con = null;
-	    String sql = "INSERT INTO book VALUES (?, ?, ?, ?, ?, ?, ?)";
+	    String sql = "INSERT INTO book VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 	    
 	    int rowCount = 0;
 	    try {
@@ -294,6 +408,7 @@ public class BookDAO {
 	        stmt.setString(5, book.getPublisher());
 	        stmt.setInt(6, book.getTotalCount());
 	        stmt.setDate(7, (Date) book.getCreateAt());
+	        stmt.setString(8,  book.getImageUrl());
 	        
 	        rowCount = stmt.executeUpdate();
 	        

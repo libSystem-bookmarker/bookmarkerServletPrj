@@ -1,15 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-<link href="https://hangeul.pstatic.net/hangeul_static/css/maru-buri.css" rel="stylesheet">
-<link rel="stylesheet" href="/resources/css/common/common.css">
-<meta charset="UTF-8">
-<title>BOOKMARK</title>
-
+  <meta charset="UTF-8">
+  <title>도서 대출 내역</title>
   <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9fafb;
+      margin: 0;
+      padding: 20px;
+    }
 
     .container {
       background: white;
@@ -211,14 +214,8 @@
       }
     }
   </style>
-
-
 </head>
 <body>
-<header> <%@ include file="/WEB-INF/views/common/header.jsp" %> </header>
-<main>
-<section class="content">
-
   <div class="container">
     <h3>도서 대출 내역</h3>
     <div class="table-wrapper">
@@ -319,12 +316,10 @@
 	</div>
 
 
-
-</section>
-</main>
-<footer> <%@ include file="/WEB-INF/views/common/footer.jsp" %> </footer>
 </body>
 
+
+	
 <script>
 
 function openReturnModal(loanId, bookId) {
@@ -395,8 +390,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 </script>
-
-
 
 
 </html>

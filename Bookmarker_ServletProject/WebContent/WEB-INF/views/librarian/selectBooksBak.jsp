@@ -67,6 +67,7 @@
             border: 1px solid #e5e7eb;
             border-radius: 0.5rem;
             padding: 1rem;
+            padding-top: 0.5rem;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s, box-shadow 0.2s;
         }
@@ -162,55 +163,95 @@
                 padding: 1rem 0.5rem;
             }
         }
+        
+        .img-button {
+		  display: inline-flex;
+		  align-items: center;
+		  padding: 8px 0px;
+/* 		  padding-left: 15px; */
+
+		}
+
+		.img-button img {
+		  width: 16px;
+		  height: 16px;
+		}
+        
+        
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>📚 도서관 관리 시스템 - 도서 목록</h1>
+        <h2>도서 관리 시스템</h2>
     </div>
 
     <div class="container">
+
+    	<form method="get" action="/selectBooks.do" id="filterForm">
         <div class="search-bar">
-            <input type="text" id="searchInput" class="search-input" placeholder="도서 제목 또는 작가명으로 검색...">
-            <select id="categorySelect" class="category-select">
-                <option value="">전체 분류</option>
-                <option value="프로그래밍">프로그래밍</option>
-                <option value="컴퓨터과학">컴퓨터과학</option>
-                <option value="문학">문학</option>
-                <option value="과학">과학</option>
-                <option value="역사">역사</option>
-                <option value="예술">예술</option>
+            <input type="text" name="keyword" value="${keyword}" class="search-input" placeholder="도서 제목 또는 작가명으로 검색..." />
+            
+            <select class="category-select" name="categoryId"
+            onchange="document.getElementById('filterForm').submit()">
+            	<option value="">전체</option>
+      			<c:forEach var="category" items="${categoryList}">
+                    <option value="${category.categoryId}" 
+                    <c:if test="${categoryId != null and category.categoryId == categoryId}">selected</c:if>>
+                        ${category.name}
+                    </option>
+                </c:forEach>
             </select>
+            
         </div>
+        </form>
 
-<div class="books-grid">
-  <c:forEach var="book" items="${books}">
-    <div class="book-card">
-      <img src="../../resources/img/book1.jpg" class="book-image">
-      <div class="book-title">${book.title}</div>
-      <div class="book-author">${book.author}</div>
-      <div class="book-publisher">${book.publisher}</div>
-      <div class="book-status">
-        <span class="status-badge
-            <c:choose>
-              <c:when test="${book.totalCount == 0}">status-unavailable</c:when>
-              <c:when test="${book.totalCount == 1}">status-limited</c:when>
-              <c:otherwise>status-available</c:otherwise>
-            </c:choose>">
-            <c:choose>
-              <c:when test="${book.totalCount == 0}">대출불가</c:when>
-              <c:otherwise>대출가능</c:otherwise>
-            </c:choose>
-        </span>
-        <span class="book-quantity">${book.totalCount}/${book.totalCount}권</span>
-      </div>
-    </div>
-  </c:forEach>
-</div>
 
-        <div id="noResults" class="no-results" style="display: none;">
-            검색 결과가 없습니다.
-        </div>
+	<div class="books-grid">
+
+<!-- 	categoryId를 받으면 선택한 categoryId를 서블릿에서 
+		그러면 category..Controller를 /경로 으로 연결해줘야 하는데  -->
+	  <c:forEach var="book" items="${books}">
+	    <div class="book-card">
+	    	 <div style="display: flex; justify-content: space-between; margin-bottom:10px">
+		      	<a href="/insertBookform.do?bookId=${book.bookId}" class="img-button">
+				  <img src="../../resources/img/Edit.png" alt="수정 아이콘" />
+				</a>
+		      	<a href="/deleteBook.do?bookId=${book.bookId}" class="img-button">
+				  <img src="../../resources/img/Delete.png" alt="삭제 아이콘" />
+				</a>
+	  		</div>
+	    
+	    
+	      <img src="../../resources/img/book1.jpg" class="book-image">
+	      <div class="book-title">${book.title}</div>
+	      <div class="book-author">${book.author}</div>
+	      <div class="book-publisher">${book.publisher}</div>
+	      <div class="book-status">
+	        <span class="status-badge
+	            <c:choose>
+	              <c:when test="${book.totalCount == 0}">status-unavailable</c:when>
+	              <c:when test="${book.totalCount == 1}">status-limited</c:when>
+	              <c:otherwise>status-available</c:otherwise>
+	            </c:choose>">
+	            <c:choose>
+	              <c:when test="${book.totalCount == 0}">대출불가</c:when>
+	              <c:otherwise>대출가능</c:otherwise>
+	            </c:choose>
+	        </span>
+	        <span class="book-quantity">${book.totalCount}/${book.totalCount}권</span>
+	      </div>
+	      
+	  		
+	  		
+	    </div>
+	  </c:forEach>
+
+	</div>
+		<c:if test="${empty books}">
+	        <div class="no-results">
+	           	검색 결과가 없습니다.
+	        </div>
+        </c:if>
     </div>
 
 </body>

@@ -16,6 +16,9 @@ public class BookReturnUpdateController implements CommandController{
 		int bookLoanDetailId = Integer.parseInt(request.getParameter("bookLoanDetailId"));
 		int bookId = Integer.parseInt(request.getParameter("bookId"));
 		
+		System.out.println("bookLoanDetailId: " + bookLoanDetailId);
+		System.out.println("bookId: " + bookId);
+		
 		bookService.updateReturnBookById(bookLoanDetailId, bookId);
 	
 		return "redirect:/selectLoanBooks.do";

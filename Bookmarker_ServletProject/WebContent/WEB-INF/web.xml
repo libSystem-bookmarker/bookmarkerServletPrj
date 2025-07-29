@@ -12,20 +12,18 @@
       <param-value>utf-8</param-value>
     </init-param>
   </filter>
-  
   <servlet>
-  	<servlet-name>DispatcherServlet</servlet-name>
-  	<servlet-class>com.bookmark.myweb.common.DispatcherServlet</servlet-class>
-  	<init-param>
-  		<param-name>configFile</param-name>
-  		<param-value>/WEB-INF/command.properties</param-value>
-  	</init-param>
+    <servlet-name>DispatcherServlet</servlet-name>
+    <servlet-class>com.bookmark.myweb.common.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>configFile</param-name>
+      <param-value>/WEB-INF/command.properties</param-value>
+    </init-param>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>DispatcherServlet</servlet-name>
-  	<url-pattern>*.do</url-pattern>
+    <servlet-name>DispatcherServlet</servlet-name>
+    <url-pattern>*.do</url-pattern>
   </servlet-mapping>
-  
   <filter-mapping>
     <filter-name>CharacterEncodingFilter</filter-name>
     <url-pattern>/*</url-pattern>

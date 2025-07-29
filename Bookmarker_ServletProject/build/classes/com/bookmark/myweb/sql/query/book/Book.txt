@@ -23,6 +23,14 @@ commit;
 
 
 -- book
+
+--book_id auto increment
+CREATE SEQUENCE book_seq
+    START WITH 1
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE;
+
 CREATE TABLE book (
     book_id          INT PRIMARY KEY,
     category_id      INT NOT NULL,
@@ -37,13 +45,11 @@ CREATE TABLE book (
         REFERENCES category(category_id)
 );
 
+ALTER TABLE book
+ADD image_url VARCHAR2(300);
 
---book_id auto increment
-CREATE SEQUENCE book_seq
-    START WITH 1
-    INCREMENT BY 1
-    NOCACHE
-    NOCYCLE;
+
+
     
 CREATE OR REPLACE TRIGGER trg_book_id
 BEFORE INSERT ON book
