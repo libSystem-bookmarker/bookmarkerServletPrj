@@ -88,4 +88,12 @@ public class AdminMemberService {
 	public String findPassword(int userId) {
 		 return adminMemberDAO.getPassword(String.valueOf(userId));
 	}
+	/**
+	 * @author bs.kim
+	 * @param userid
+	 */
+	public int updatePassword(int userId, String newPw) {
+	    AdminMemberDAO dao = new AdminMemberDAO();
+	    return dao.updatePassword(userId, newPw);
+	}
 }

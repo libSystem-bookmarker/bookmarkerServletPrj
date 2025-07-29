@@ -222,4 +222,23 @@ public class AdminMemberDAO {
 		}
 		return null;
 	}
+	/**
+	*@author bs kim
+	*@param 비밀번호 수정 메서드 추가
+	*/
+	public int updatePassword(int userId, String newPw) {
+		String sql = "UPDATE member SET pw = ? WHERE user_id = ?";
+	    try (Connection con = dataSource.getConnection();
+	         PreparedStatement pstmt = con.prepareStatement(sql)) {
+	    	  System.out.println("AutoCommit? " + con.getAutoCommit());
+	        pstmt.setString(1, newPw);
+	        pstmt.setInt(2, userId);
+
+	        return pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	        System.out.println("updatePassword exception: " + e.getMessage());
+	        throw new RuntimeException(e);
+	    }
+	}
+
 }
