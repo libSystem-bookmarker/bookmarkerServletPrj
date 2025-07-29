@@ -14,7 +14,7 @@
 <header> <jsp:include page="/WEB-INF/views/common/header.jsp"/> </header>
 <main>
     <jsp:include page="/WEB-INF/views/common/sidebar.jsp"/>
-    <section class="content">
+    <section id = "main-section" class="content">
     <p>현재 포함되는 페이지: ${includePage}</p>
     <c:if test="${not empty includePage}">
     	<jsp:include page="${includePage}" />

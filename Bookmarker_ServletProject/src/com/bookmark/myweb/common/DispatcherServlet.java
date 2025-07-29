@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.bookmark.myweb.controller.common.ErrorController;
 
-
 /**
  * @author yeonsoo
  * @create 2025.07.04 uri, class 매핑
@@ -67,6 +66,9 @@ public class DispatcherServlet extends HttpServlet {
 
 		try {// process는 명령을 처리하고 뷰 페이지 반환
 			viewPage = controller.process(request, response);
+			// DispatcherServlet.java
+			if (viewPage == null) return;
+
 			if ((viewPage != null) && (viewPage.indexOf("redirect:") == 0)) { // 뷰 이름 앞에 리다이렉트가 붙으면 리다이렉트
 				viewPage = viewPage.substring(9); // 9는 redirect의 길이
 				response.sendRedirect(request.getContextPath() + viewPage);
@@ -76,8 +78,10 @@ public class DispatcherServlet extends HttpServlet {
 			throw new ServletException(e);
 		}
 
-		if (viewPage != null) { // 뷰로 포워드
-			viewPage = "/WEB-INF/views/" + viewPage;
+		if (viewPage != null) {
+			if (!viewPage.startsWith("/WEB-INF/")) {
+				viewPage = "/WEB-INF/views/" + viewPage;
+			}
 		} else {
 			viewPage = "/WEB-INF/views/index.jsp";
 		}

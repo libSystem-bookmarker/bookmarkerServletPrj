@@ -5,19 +5,18 @@
   <ul class="menu">
 
     <!-- 공통 메뉴 -->
-    <li class="menu-item ${param.tab == 'profile' || empty param.tab ? 'menu-item-active' : ''}">
-      <a href="memberInfo.do?tab=profile">내 정보</a>
-    </li>
-
+  	<li class="menu-item menu-item-active" onclick="selectMenu(this, 'profile')">
+ 		 <a href="javascript:void(0);">내 정보</a>
+	</li>
     <!-- 관리자(admin) 메뉴 -->
-    <c:if test="${loginMember.role == 'admin'}">
-      <li class="menu-item ${param.tab == 'profile' || empty param.tab ? 'menu-item-active' : ''}">
-        <a href="#">회원 등록</a>
-      </li>
-      <li class="menu-item" onclick="selectMenu(this)">
-        <a href="memberInfo.do?tab=memberList">회원 조회</a>
-
-    </c:if>
+<c:if test="${loginMember.role == 'admin'}">
+  <li class="menu-item" onclick="selectMenu(this, 'insertMember')">
+    <a href="javascript:void(0);">회원 등록</a>
+  </li>
+  <li class="menu-item" onclick="selectMenu(this, 'memberList')">
+    <a href="javascript:void(0);">회원 조회</a>
+  </li>
+</c:if>
 
     <!-- 사서(librarian) 메뉴 -->
     <c:if test="${loginMember.role == 'librarian'}">
