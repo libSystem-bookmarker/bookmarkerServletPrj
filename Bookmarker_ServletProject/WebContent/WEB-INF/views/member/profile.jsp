@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
 <form action="updateMember.do" method="post" class="profile-form">
 	<input type="hidden" name="userId" value="${loginMember.userId}">
 <h2>${sessionScope.loginMember.name}의 프로필 정보</h2>

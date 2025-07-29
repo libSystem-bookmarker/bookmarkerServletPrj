@@ -2,6 +2,7 @@ package com.bookmark.myweb.controller.member;
 
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,17 +35,28 @@ public class MemberPageGetController implements CommandController {
 		    request.setAttribute("facultyName", names.get("facultyName"));
 		}
 
-		if (tab == null || tab.isEmpty()) {
-			tab = "profile";
-			includePage = "../member/" + tab + ".jsp";
+		if (tab == null || tab.isEmpty() || tab.equals("profile")) {
+			includePage = "/member/" + tab + ".jsp";
 		} else {
 			// get Page
-			includePage = "../" + role + "/" + tab + ".jsp";
+			includePage = "/" + role + "/" + tab + ".jsp";
+		}
+		
+		try {
+			if ("true".equals(request.getParameter("isAjax"))) {
+				RequestDispatcher disp = request.getRequestDispatcher("/WEB-INF/views" + includePage);
+				disp.forward(request, response);
+				return null;
+			}
+		} catch (Exception e) {
+			System.out.println("memberInfoGetController: "+e.getMessage());
+			
 		}
 
-		request.setAttribute("includePage", includePage);
-		System.out.println("MemberPageGetController 호출");
-		return "member/memberInfo.jsp";
+
+        System.out.println("MemberPageGetController: "+includePage);
+        return "member/memberInfo.jsp";
+    
 	}
 
 }
