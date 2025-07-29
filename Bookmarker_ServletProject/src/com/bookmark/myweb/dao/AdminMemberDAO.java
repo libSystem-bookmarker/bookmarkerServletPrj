@@ -75,6 +75,8 @@ public class AdminMemberDAO {
 
 		return rowCount;
 	}
+	
+	//select member info
 
 	/**
 	 * @author ys.kim
@@ -203,7 +205,7 @@ public class AdminMemberDAO {
 	 * @param userId 로그인을 위해 사용자 정보 찾아옴
 	 */
 	public MemberVO selectMemberId(int userId) {
-		String sql = "SELECT user_id, pw, name, role FROM member WHERE user_id = ?";
+		String sql = "SELECT * FROM member WHERE user_id = ?";
 		try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setInt(1, userId);
 			ResultSet rs = pstmt.executeQuery();
@@ -211,8 +213,13 @@ public class AdminMemberDAO {
 				MemberVO member = new MemberVO();
 				member.setUserId(rs.getInt("user_id"));
 				member.setPw(rs.getString("pw"));
-				member.setName(rs.getString("name"));
 				member.setRole(rs.getString("role"));
+				member.setName(rs.getString("name"));
+				member.setPhoneNumber(rs.getString("phone_number"));
+				member.setAddress(rs.getString("address"));
+				member.setEmail(rs.getString("email"));
+				member.setUnitId(rs.getInt("unit_id"));
+				member.setCreatedAt(rs.getDate("created_at"));
 
 				return member;
 			}
@@ -259,4 +266,51 @@ public class AdminMemberDAO {
 	}
 
 
+=======
+	
+	public void updateAdminMember(int userId, String name, String role, String phone, String email, String address, int unitId) {
+	    String sql = "UPDATE MEMBER SET NAME=?, ROLE=?, PHONE_NUMBER=?, EMAIL=?, ADDRESS=?, UNIT_ID=? WHERE USER_ID=?";
+	    try (Connection conn = dataSource.getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	        pstmt.setString(1, name);
+	        pstmt.setString(2, role);
+	        pstmt.setString(3, phone);
+	        pstmt.setString(4, email);
+	        pstmt.setString(5, address);
+	        pstmt.setInt(6, unitId);
+	        pstmt.setInt(7, userId);
+	        pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+
+	public void updateName(int userId, String name) {
+	    String sql = "UPDATE MEMBER SET NAME=? WHERE USER_ID=?";
+	    try (Connection conn = dataSource.getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	        pstmt.setString(1, name);
+	        pstmt.setInt(2, userId);
+	        pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	public int updateMemberInfo(int userId, String phone, String email, String address) {
+		String sql = "UPDATE MEMBER SET PHONE_NUMBER = ?, EMAIL = ?, ADDRESS = ? WHERE USER_ID = ?";
+		try (Connection conn = dataSource.getConnection();
+		     PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, phone);
+			pstmt.setString(2, email);
+			pstmt.setString(3, address);
+			pstmt.setInt(4, userId);
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+>>>>>>> feat/member/updateInfo
 }

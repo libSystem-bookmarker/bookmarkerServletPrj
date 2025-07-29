@@ -1,0 +1,75 @@
+.profile-form {
+  max-width: 500px;
+  margin: 30px auto;
+  padding: 25px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.profile-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.profile-form label {
+  display: block;
+  margin-bottom: 15px;
+  font-weight: bold;
+  color: #333;
+}
+
+.profile-form input[type="text"],
+.profile-form input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+.profile-form input[readonly] {
+  background-color: #eee;
+  cursor: not-allowed;
+}
+
+.submit {
+  width: 100%;
+  padding: 12px;
+  background-color: #193F75;
+  color: #F7F6F6;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-bottom: 10px;
+}
+
+.reset {
+  width: 100%;
+  padding: 12px;
+  background-color: #EBEBEB; 
+  color: #193F75;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+
+
+.submit:hover {
+  background-color: #3C5475;
+}
+
+.reset:hover {
+  background-color: #B1B1B1;
+}

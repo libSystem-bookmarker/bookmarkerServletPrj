@@ -30,14 +30,14 @@
     <filter-name>CharacterEncodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-  <error-page>
+<!--   <error-page>
     <exception-type>java.lang.RuntimeException</exception-type>
     <location>/WEB-INF/views/error/runtime.jsp</location>
   </error-page>
   <error-page>
     <error-code>404</error-code>
     <location>/WEB-INF/views/error/error404.jsp</location>
-  </error-page>
+  </error-page> -->
   <resource-ref>
     <description>Oracle DataSource</description>
     <res-ref-name>jdbc/Oracle</res-ref-name>
