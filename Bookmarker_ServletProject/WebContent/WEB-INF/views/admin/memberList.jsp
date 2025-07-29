@@ -1,3 +1,5 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
  <h2>회원 목록</h2>
   <!-- 필터/검색 영역 -->
   <form id="filterForm" action="memberInfo.do" method="get">
