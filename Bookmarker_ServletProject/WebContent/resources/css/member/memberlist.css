@@ -1,0 +1,21 @@
+.member-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.member-table th,
+.member-table td {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+#filterForm {
+  margin-bottom: 15px;
+}
+
+#filterForm input[type="text"] {
+  width: 200px;
+  padding: 5px;
+}

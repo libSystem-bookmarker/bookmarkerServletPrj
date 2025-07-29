@@ -15,7 +15,7 @@
         <a href="#">회원 등록</a>
       </li>
       <li class="menu-item" onclick="selectMenu(this)">
-        <a href="#">회원 조회</a>
+        <a href="memberInfo.do?tab=memberList">회원 조회</a>
 
     </c:if>
 
@@ -47,6 +47,5 @@
         <a href="#">도서 장바구니</a>
       </li>
     </c:if>
-
   </ul>
 </nav>

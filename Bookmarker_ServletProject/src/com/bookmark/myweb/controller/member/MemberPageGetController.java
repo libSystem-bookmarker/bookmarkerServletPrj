@@ -43,6 +43,7 @@ public class MemberPageGetController implements CommandController {
 		}
 
 		request.setAttribute("includePage", includePage);
+		System.out.println(includePage);
 		System.out.println("MemberPageGetController 호출");
 		return "member/memberInfo.jsp";
 	}

@@ -31,7 +31,7 @@ public class MemberSelectAllController implements CommandController {
 		
 		//회원 목록 속성 저장
 		request.setAttribute("selectMembersList", selectMembersList);
-		return "member/memberList";
+		return "admin/memberList.jsp";
 	}
 
 }
