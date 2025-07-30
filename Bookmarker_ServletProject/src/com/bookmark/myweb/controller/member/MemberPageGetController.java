@@ -1,5 +1,6 @@
 package com.bookmark.myweb.controller.member;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -7,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.bookmark.myweb.common.CommandController;
+import com.bookmark.myweb.dao.AdminMemberDAO;
+import com.bookmark.myweb.model.MajorVO;
 import com.bookmark.myweb.model.MemberVO;
 import com.bookmark.myweb.service.MajorService;
 
@@ -34,12 +37,39 @@ public class MemberPageGetController implements CommandController {
 		    request.setAttribute("departmentName", names.get("departmentName"));
 		    request.setAttribute("facultyName", names.get("facultyName"));
 		}
+		
+		// 회원 목록 조회 tab 처리
+	    if ("memberList".equals(tab)) {
+	        AdminMemberDAO adminMemberDAO = new AdminMemberDAO();
+	        List<MemberVO> selectMembersList = adminMemberDAO.selectAllMembers();
+	        request.setAttribute("selectMembersList", selectMembersList);
+	    }
 
 		if (tab == null || tab.isEmpty() || tab.equals("profile") || tab.equals("null")) {
 		    tab = "profile";  // 명시적 디폴트
 		    includePage = "/member/" + tab + ".jsp";
 		} else {
 		    includePage = "/" + role + "/" + tab + ".jsp";
+		}
+		
+		if ("insertMember".equals(tab)) {
+		    MajorService majorService = new MajorService();
+
+		    // 학부 목록
+		    List<MajorVO> facultyList = majorService.getFacultyList();
+		    request.setAttribute("facultyList", facultyList);
+
+		    // 사용자가 선택한 facultyId에 따라 학과 목록도 (선택적으로) 전달
+//		    String facultyIdStr = request.getParameter("facultyId");
+//		    if (facultyIdStr != null && !facultyIdStr.isEmpty()) {
+//		        try {
+//		            int facultyId = Integer.parseInt(facultyIdStr);
+//		            List<MajorVO> deptList = majorService.getDepartmentsByFacultyId(facultyId);
+//		            request.setAttribute("deptList", deptList);
+//		        } catch (NumberFormatException e) {
+//		            System.out.println("잘못된 facultyId: " + facultyIdStr);
+//		        }
+//		    }
 		}
 
 		

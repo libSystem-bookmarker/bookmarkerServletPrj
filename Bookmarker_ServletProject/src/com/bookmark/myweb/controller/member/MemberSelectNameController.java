@@ -9,7 +9,7 @@ public class MemberSelectNameController implements CommandController {
 
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+		System.out.println("MemberSelectNameController 왓서요");
 		return null;
 	}
 

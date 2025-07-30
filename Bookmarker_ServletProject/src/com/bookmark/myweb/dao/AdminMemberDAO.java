@@ -328,4 +328,39 @@ public class AdminMemberDAO {
 		}
 		return 0;
 	}
+
+	public int updateMemberInfoByAdmin(int userId, String role, String unitId, String name, String phone, String email, String address) {
+		System.out.println("Dao updateMemberInfoByAdmin 도착");
+		
+		String sql = "UPDATE MEMBER SET ROLE = ?, UNIT_ID = ?, NAME = ?, PHONE_NUMBER = ?, EMAIL = ?, ADDRESS = ? WHERE USER_ID = ?";
+		
+		try (Connection con = dataSource.getConnection();
+		     PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, role);
+			pstmt.setString(2, unitId);
+			pstmt.setString(3, name);
+			pstmt.setString(4, phone);
+			pstmt.setString(5, email);
+			pstmt.setString(6, address);
+			pstmt.setInt(7, userId);
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return 0;
+	}
+
+	public int deleteMember(int userId) {
+		String sql = "DELETE FROM MEMBER WHERE USER_ID = ?";
+	    
+	    try (Connection con = dataSource.getConnection();
+	         PreparedStatement pstmt = con.prepareStatement(sql)) {
+	        pstmt.setInt(1, userId);
+	        return pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+		return 0;
+	}
 }

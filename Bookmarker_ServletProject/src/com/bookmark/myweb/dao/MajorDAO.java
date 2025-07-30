@@ -66,7 +66,7 @@ public class MajorDAO {
 	
 
 	public List<MajorVO> getDepartments(int facultyId) {
-	    List<MajorVO> list = new ArrayList<>();
+	    List<MajorVO> deptList = new ArrayList<>();
 	    String sql = "SELECT UNIT_ID, UNIT_NAME FROM ACADEMIC_UNIT WHERE UNIT_TYPE = 'DEPARTMENT' AND PARENT_ID = ?";
 	    try (Connection cnn = dataSource.getConnection();
 	         PreparedStatement pstmt = cnn.prepareStatement(sql)) {
@@ -76,12 +76,12 @@ public class MajorDAO {
 	            MajorVO vo = new MajorVO();
 	            vo.setUnitId(rs.getInt("UNIT_ID"));
 	            vo.setUnitName(rs.getString("UNIT_NAME"));
-	            list.add(vo);
+	            deptList.add(vo);
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
-	    return list;
+	    return deptList;
 	}
 	
     public List<MajorVO> selectFacultyList() {

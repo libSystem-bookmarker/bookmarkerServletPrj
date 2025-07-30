@@ -116,6 +116,31 @@ public class AdminMemberService {
 	}
 
 	public MemberVO selectMemberInfo(int userId) {
+		System.out.println(userId + "님의 회원 조회를 위한 service 도착");
 		return adminMemberDAO.selectMemberInfo(userId);
+	}
+
+	/**
+	 *  관리자가 회원 정보 변경
+	 * @param userId
+	 * @param role
+	 * @param unitId
+	 * @param name
+	 * @param phone
+	 * @param email
+	 * @param address
+	 */
+	public void updateMemberInfoByAdmin(int userId, String role, String unitId, String name, String phone, String email,
+			String address) {
+		int result = adminMemberDAO.updateMemberInfoByAdmin(userId, role, unitId, name, phone, email, address);
+		System.out.println("updateMemberInfoByAdmin 결과: " + result);
+		
+	}
+
+	public void deleteMember(int userId) throws Exception {
+		int result = adminMemberDAO.deleteMember(userId);
+        if (result == 0) {
+            throw new Exception("삭제 실패: 해당 회원이 존재하지 않음");
+        }
 	}
 }
