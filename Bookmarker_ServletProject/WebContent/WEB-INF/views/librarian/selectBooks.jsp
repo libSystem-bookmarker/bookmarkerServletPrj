@@ -180,6 +180,37 @@
 		  width: 16px;
 		  height: 16px;
 		}
+		
+		
+		
+		/* nav */
+		    .nav-container {
+      display: flex;
+      background-color: #0D326C; /* 네이비색 배경 */
+      padding: 8px;
+    }
+
+    .nav-tab {
+      flex: 1;
+      text-align: center;
+      padding: 10px 0;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      background-color: #0D326C;
+      border: none;
+      transition: background-color 0.3s;
+    }
+
+    .nav-tab:hover {
+      background-color: #1a478f;
+    }
+
+    .nav-tab.active {
+      background-color: white;
+      color: #0D326C;
+      border-radius: 5px;
+    }
         
         
     </style>
@@ -192,6 +223,12 @@
 <header> <%@ include file="/WEB-INF/views/common/header.jsp" %> </header>
 <main>
 <section class="content">
+
+  <div class="nav-container">
+    <a href="/selectBooks.do" class="nav-tab active">도서 조회</a>
+    <a href="/selectLoanBooks.do" class="nav-tab">대출 내역</a>
+    <a href="/insertBookform.do" class="nav-tab">도서 등록</a>
+  </div>
 
  <div class="container">
 

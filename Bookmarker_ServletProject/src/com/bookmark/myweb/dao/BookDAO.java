@@ -34,37 +34,97 @@ public class BookDAO {
 	}
 	
 	
+	public int insertBookLoanDetail(int userId, int bookId) {
+	    String insertLoanSql = "INSERT INTO book_loan_detail (" +
+	            "book_loan_detail_id, book_id, user_id, loan_date, return_date, loan_status" +
+	            ") VALUES (" +
+	            "book_loan_detail_seq.NEXTVAL, ?, ?, ?, ?, ?" +
+	            ")";
+	    
+	    String updateBookSql = "UPDATE book SET total_count = total_count - 1 WHERE book_id = ? AND total_count > 0";
+
+	    int result = 0;
+
+	    try (
+	        Connection conn = dataSource.getConnection();
+	        PreparedStatement insertStmt = conn.prepareStatement(insertLoanSql);
+	        PreparedStatement updateStmt = conn.prepareStatement(updateBookSql);
+	    ) {
+	        conn.setAutoCommit(false); // 🔐 트랜잭션 시작
+
+	        LocalDate today = LocalDate.now();
+	        LocalDate returnDate = today.plusDays(14);
+
+	        // 1. 도서 수량 감소
+	        updateStmt.setInt(1, bookId);
+	        int updateResult = updateStmt.executeUpdate();
+
+	        if (updateResult == 0) {
+	            // 수량이 0이라면 대출 불가
+	            conn.rollback();
+	            System.out.println("❌ 대출 실패: 도서 수량 부족");
+	            return 0;
+	        }
+
+	        // 2. 대출 기록 추가
+	        insertStmt.setInt(1, bookId);
+	        insertStmt.setInt(2, userId);
+	        insertStmt.setDate(3, Date.valueOf(today));
+	        insertStmt.setDate(4, Date.valueOf(returnDate));
+	        insertStmt.setString(5, "대출중");
+
+	        result = insertStmt.executeUpdate();
+
+	        conn.commit(); // ✅ 트랜잭션 성공
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        try {
+	            // ⚠️ 예외 발생 시 롤백
+	            if (!dataSource.getConnection().getAutoCommit()) {
+	                dataSource.getConnection().rollback();
+	            }
+	        } catch (Exception rollbackEx) {
+	            rollbackEx.printStackTrace();
+	        }
+	    }
+
+	    return result;
+	}
+
 	
 	
-    public int insertBookLoanDetail(int userId, int bookId) {
-        String sql = "INSERT INTO book_loan_detail (" +
-                     "    book_loan_detail_id, book_id, user_id, loan_date, return_date, loan_status" +
-                     ") VALUES (" +
-                     "    book_loan_detail_seq.NEXTVAL, ?, ?, ?, ?, ?" +
-                     ")";
 
-        int result = 0;
-
-        try (
-            Connection conn = dataSource.getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-        ) {
-            LocalDate today = LocalDate.now();
-            LocalDate returnDate = today.plusDays(14); // 기본 대출 기간 14일
-
-            pstmt.setInt(1, bookId);
-            pstmt.setInt(2, userId);
-            pstmt.setDate(3, Date.valueOf(today));
-            pstmt.setDate(4, Date.valueOf(returnDate));
-            pstmt.setString(5, "대출중");
-
-            result = pstmt.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return result;
-    }
+	
+//    public int insertBookLoanDetail(int userId, int bookId) {
+//        String sql = "INSERT INTO book_loan_detail (" +
+//                     "    book_loan_detail_id, book_id, user_id, loan_date, return_date, loan_status" +
+//                     ") VALUES (" +
+//                     "    book_loan_detail_seq.NEXTVAL, ?, ?, ?, ?, ?" +
+//                     ")";
+//
+//        int result = 0;
+//
+//        try (
+//            Connection conn = dataSource.getConnection();
+//            PreparedStatement pstmt = conn.prepareStatement(sql);
+//        ) {
+//            LocalDate today = LocalDate.now();
+//            LocalDate returnDate = today.plusDays(14); // 기본 대출 기간 14일
+//
+//            pstmt.setInt(1, bookId);
+//            pstmt.setInt(2, userId);
+//            pstmt.setDate(3, Date.valueOf(today));
+//            pstmt.setDate(4, Date.valueOf(returnDate));
+//            pstmt.setString(5, "대출중");
+//
+//            result = pstmt.executeUpdate();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        return result;
+//    }
 	
 	
 	

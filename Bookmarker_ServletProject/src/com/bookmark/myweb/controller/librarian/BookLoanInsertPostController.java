@@ -14,8 +14,14 @@ public class BookLoanInsertPostController implements CommandController{
 	public String process(HttpServletRequest request, HttpServletResponse response) {
 		
 
+		
+		
 //        int userId = Integer.parseInt(request.getParameter("userId"));
         int bookId = Integer.parseInt(request.getParameter("bookId"));
+        
+        
+        
+        
 
         int userId = 12;
         

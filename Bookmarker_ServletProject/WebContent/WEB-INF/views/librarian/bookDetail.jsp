@@ -378,6 +378,7 @@
             </div>
 
 		   <!-- 대출 버튼 -->
+		   <c:if test="${book.totalCount > 0}">
 		   <form id="loanForm" action="/insertLoanBook.do" method="post">
 		       <input type="hidden" name="userId" value="${sessionScope.loginUser.userId}" />
 		       <input type="hidden" name="bookId" value="${book.bookId}" />
@@ -386,6 +387,13 @@
 		       	📚 대출하기
 		       </button>
 		   </form>
+		   </c:if>
+		   
+		   <c:if test="${book.totalCount == 0}">
+			  <div style="color: gray; font-weight: bold; margin-top: 10px;">
+			      현재 대출 가능한 수량이 없습니다.(수량 0권)
+			  </div>
+			</c:if>
                     
                     <div class="loan-info">
                         <div style="font-size:1.3em"><strong>대출 안내</strong></div>
