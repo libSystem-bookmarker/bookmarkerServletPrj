@@ -6,6 +6,7 @@
 <head>
 <link href="https://hangeul.pstatic.net/hangeul_static/css/maru-buri.css" rel="stylesheet">
 <link rel="stylesheet" href="/resources/css/common/common.css">
+<link rel="stylesheet" href="/resources/css/common/sideNav.css">
 <meta charset="UTF-8">
 <title>BOOKMARK</title>
 
@@ -184,16 +185,18 @@
 		
 		
 		/* nav */
-		    .nav-container {
+  .nav-container {
       display: flex;
       background-color: #0D326C; /* 네이비색 배경 */
-      padding: 8px;
-    }
+      padding: 5px;   
+ 	 border-radius:5px;
+ 	 margin-bottom:30px;
+ }
 
     .nav-tab {
       flex: 1;
       text-align: center;
-      padding: 10px 0;
+      padding: 8px 0;
       color: white;
       text-decoration: none;
       font-weight: bold;
@@ -203,7 +206,8 @@
     }
 
     .nav-tab:hover {
-      background-color: #1a478f;
+      background-color: white;
+      color: #0D326C;
     }
 
     .nav-tab.active {
@@ -222,15 +226,20 @@
 <body>
 <header> <%@ include file="/WEB-INF/views/common/header.jsp" %> </header>
 <main>
-<section class="content">
 
-  <div class="nav-container">
-    <a href="/selectBooks.do" class="nav-tab active">도서 조회</a>
+<jsp:include page="/WEB-INF/views/common/sidebar.jsp"/>
+
+<section class="content">
+	
+
+
+ <div class="container">
+ 
+   <div class="nav-container">
+    <a href="/selectBooks.do" class="nav-tab">도서 조회</a>
     <a href="/selectLoanBooks.do" class="nav-tab">대출 내역</a>
     <a href="/insertBookform.do" class="nav-tab">도서 등록</a>
   </div>
-
- <div class="container">
 
     	<form method="get" action="/selectBooks.do" id="filterForm">
         <div class="search-bar">

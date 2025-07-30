@@ -20,14 +20,14 @@
 
     <!-- 사서(librarian) 메뉴 -->
     <c:if test="${loginMember.role == 'librarian'}">
-      <li class="menu-item" onclick="selectMenu(this)">
-        <a href="#">도서 등록</a>
-      </li>
-      <li class="menu-item" onclick="selectMenu(this)">
+    <li class="menu-item" onclick="selectMenu(this, 'selectBooks')">
         <a href="#">도서 조회</a>
       </li>
-      <li class="menu-item" onclick="selectMenu(this)">
-        <a href="#">연체자 조회</a>
+      <li class="menu-item" onclick="selectMenu(this, 'insertBookform')">
+        <a href="#">도서 등록</a>
+      </li>
+      <li class="menu-item" onclick="selectMenu(this, 'loanBooks')">
+        <a href="#">대출 내역</a>
       </li>
     </c:if>
 
@@ -35,12 +35,6 @@
     <c:if test="${loginMember.role == 'student'}">
       <li class="menu-item" onclick="selectMenu(this)">
         <a href="#">도서 대출 내역</a>
-      </li>
-      <li class="menu-item" onclick="selectMenu(this)">
-        <a href="#">연체된 도서 목록</a>
-      </li>
-      <li class="menu-item" onclick="selectMenu(this)">
-        <a href="#">예약 도서 목록</a>
       </li>
       <li class="menu-item" onclick="selectMenu(this)">
         <a href="#">도서 장바구니</a>

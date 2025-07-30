@@ -209,7 +209,47 @@
       h2 {
         font-size: 20px;
       }
+      
+      .nav-container{
+      	padding: 16px;
+      }
     }
+    
+    		/* nav */
+  .nav-container {
+      display: flex;
+      background-color: #0D326C; /* 네이비색 배경 */
+      padding: 5px;   
+ 	 border-radius:5px;
+ 	 
+ 	 max-width: 1200px;
+ 	 margin: auto;
+ 	 margin-bottom:30px;
+ }
+
+    .nav-tab {
+      flex: 1;
+      text-align: center;
+      padding: 8px 0;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      background-color: #0D326C;
+      border: none;
+      transition: background-color 0.3s;
+    }
+
+    .nav-tab:hover {
+      background-color: white;
+      color: #0D326C;
+    }
+
+    .nav-tab.active {
+      background-color: white;
+      color: #0D326C;
+      border-radius: 5px;
+    }
+    
   </style>
 
 
@@ -219,7 +259,16 @@
 <main>
 <section class="content">
 
+     <div class="nav-container">
+    <a href="/selectBooks.do" class="nav-tab">도서 조회</a>
+    <a href="/selectLoanBooks.do" class="nav-tab">대출 내역</a>
+    <a href="/insertBookform.do" class="nav-tab">도서 등록</a>
+  </div>
+  
+
   <div class="container">
+  
+
     <h3>도서 대출 내역</h3>
     <div class="table-wrapper">
       <table>

@@ -10,14 +10,12 @@
 <title>BOOKMARK</title>
 </head>
 <body>
-<header> <jsp:include page="/WEB-INF/views/common/header.jsp" />
- </header>
+<header> <%@ include file="/WEB-INF/views/common/header.jsp" %> </header>
 <main>
 <section class="content">
 <h1>main</h1>
 </section>
 </main>
-<footer> <jsp:include page="/WEB-INF/views/common/footer.jsp" />
- </footer>
+<footer> <%@ include file="/WEB-INF/views/common/footer.jsp" %> </footer>
 </body>
 </html>

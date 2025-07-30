@@ -380,8 +380,8 @@
 		   <!-- 대출 버튼 -->
 		   <c:if test="${book.totalCount > 0}">
 		   <form id="loanForm" action="/insertLoanBook.do" method="post">
-		       <input type="hidden" name="userId" value="${sessionScope.loginUser.userId}" />
-		       <input type="hidden" name="bookId" value="${book.bookId}" />
+<%-- 		       <input type="hidden" name="userId" value="${sessionScope.loginUser.userId}" />
+ --%>		       <input type="hidden" name="bookId" value="${book.bookId}" />
 		
 		       <button type="submit" class="loan-button" id="loanButton">
 		       	📚 대출하기
