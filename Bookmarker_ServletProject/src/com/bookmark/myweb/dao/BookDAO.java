@@ -369,6 +369,37 @@ public class BookDAO {
 	}
 
 	
+	public int deleteBookAndLoanDetailByBookId(int bookId) {
+	    String deleteLoanSQL = "DELETE FROM book_loan_detail WHERE book_id = ?";
+	    String deleteBookSQL = "DELETE FROM book WHERE book_id = ?";
+
+	    int result = 0;
+
+	    try (
+	        Connection conn = dataSource.getConnection();
+	        PreparedStatement loanStmt = conn.prepareStatement(deleteLoanSQL);
+	        PreparedStatement bookStmt = conn.prepareStatement(deleteBookSQL);
+	    ) {
+	        conn.setAutoCommit(false); // 수동 커밋
+
+	        // 1. 대출 기록 먼저 삭제
+	        loanStmt.setInt(1, bookId);
+	        loanStmt.executeUpdate();
+
+	        // 2. 도서 삭제
+	        bookStmt.setInt(1, bookId);
+	        result = bookStmt.executeUpdate();
+
+	        conn.commit(); // 커밋
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        throw new RuntimeException("도서 및 대출 기록 삭제 중 오류 발생", e);
+	    }
+
+	    return result;
+	}
+
+	
 	
 	
 	

@@ -8,8 +8,10 @@
 <link rel="stylesheet" href="/resources/css/common/common.css">
 <link rel="stylesheet" href="../../resources/css/librarian/insertBookform.css" />
 <meta charset="UTF-8">
-<title>BOOKMARK</title>
 </head>
+
+
+
 <body>
 <header> <%@ include file="/WEB-INF/views/common/header.jsp" %> </header>
 <main>

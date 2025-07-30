@@ -21,13 +21,13 @@
     <!-- 사서(librarian) 메뉴 -->
     <c:if test="${loginMember.role == 'librarian'}">
     <li class="menu-item" onclick="selectMenu(this, 'selectBooks')">
-        <a href="#">도서 조회</a>
+        <a href="javascript:void(0)">도서 조회</a>
       </li>
       <li class="menu-item" onclick="selectMenu(this, 'insertBookform')">
-        <a href="#">도서 등록</a>
+        <a href="javascript:void(0)">도서 등록</a>
       </li>
       <li class="menu-item" onclick="selectMenu(this, 'loanBooks')">
-        <a href="#">대출 내역</a>
+        <a href="javascript:void(0)">대출 내역</a>
       </li>
     </c:if>
 
