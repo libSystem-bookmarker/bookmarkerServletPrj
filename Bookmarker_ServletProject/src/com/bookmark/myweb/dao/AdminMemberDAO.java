@@ -363,4 +363,50 @@ public class AdminMemberDAO {
 	    }
 		return 0;
 	}
+
+	public List<MemberVO> findMembers(String role, String keyword) {
+	    List<MemberVO> list = new ArrayList<>();
+	    Connection con = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+
+	    try {
+	    	con = dataSource.getConnection();
+
+	        StringBuilder sql = new StringBuilder("SELECT * FROM MEMBER WHERE 1=1");
+
+	        if (role != null && !role.isEmpty()) {
+	            sql.append(" AND role = ?");
+	        }
+	        if (keyword != null && !keyword.isEmpty()) {
+	            sql.append(" AND (name LIKE ? OR email LIKE ?)");
+	        }
+
+	        pstmt = con.prepareStatement(sql.toString());
+
+	        int index = 1;
+	        if (role != null && !role.isEmpty()) {
+	            pstmt.setString(index++, role);
+	        }
+	        if (keyword != null && !keyword.isEmpty()) {
+	            String like = "%" + keyword + "%";
+	            pstmt.setString(index++, like);
+	            pstmt.setString(index++, like);
+	        }
+
+	        rs = pstmt.executeQuery();
+	        while (rs.next()) {
+	            MemberVO m = new MemberVO();
+	            m.setUserId(rs.getInt("user_id"));
+	            m.setName(rs.getString("name"));
+	            m.setRole(rs.getString("role"));
+	            m.setEmail(rs.getString("email"));
+	            list.add(m);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return list;
+	}
+
 }

@@ -17,7 +17,11 @@
 <main>
     <jsp:include page="/WEB-INF/views/common/sidebar.jsp"/>
     <section id = "main-section" class="content">
-    <p>현재 포함되는 페이지: ${includePage}</p>
+    <c:if test="${not empty sessionScope.msg}">
+    <script>alert('${sessionScope.msg}');</script>
+    <c:remove var="msg" scope="session"/>
+</c:if>
+    
     <c:if test="${not empty includePage}">
     	<jsp:include page="${includePage}" />
     </c:if>
@@ -25,5 +29,6 @@
 </main>
 <footer> <jsp:include page="/WEB-INF/views/common/footer.jsp"/> </footer>
 <script src="/resources/js/common/sidebar.js" defer></script>
+<script src="/resources/js/member/memberlist.js" defer></script>
 </body>
 </html>

@@ -23,8 +23,9 @@ public class MemberSelectIdController implements CommandController {
 		MemberVO member = adminService.selectMemberInfo(userId);
 
 		request.setAttribute("member", member);
+		request.setAttribute("includePage", "/admin/memberList.jsp");
 		
-		return "admin/selectMember.jsp";
+		return "redirect:/myPage.do?tab=memberList";
 	}
 
 }

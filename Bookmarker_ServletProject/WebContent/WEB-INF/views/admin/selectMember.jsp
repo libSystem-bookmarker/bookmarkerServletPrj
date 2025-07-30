@@ -2,10 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%-- admin/selectMember.jsp --%>
+
 <h2>회원 상세 정보</h2>
 <table border="1" cellpadding="8" cellspacing="0">
-  <tr>
-    <th>아이디</th>
+
+  <tr>    <th>아이디</th>
     <td>${member.userId}</td>
   </tr>
   <tr>

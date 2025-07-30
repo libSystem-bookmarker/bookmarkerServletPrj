@@ -38,6 +38,7 @@ public class MemberPageGetController implements CommandController {
 		    request.setAttribute("facultyName", names.get("facultyName"));
 		}
 		
+		
 		// 회원 목록 조회 tab 처리
 	    if ("memberList".equals(tab)) {
 	        AdminMemberDAO adminMemberDAO = new AdminMemberDAO();
@@ -58,18 +59,6 @@ public class MemberPageGetController implements CommandController {
 		    // 학부 목록
 		    List<MajorVO> facultyList = majorService.getFacultyList();
 		    request.setAttribute("facultyList", facultyList);
-
-		    // 사용자가 선택한 facultyId에 따라 학과 목록도 (선택적으로) 전달
-//		    String facultyIdStr = request.getParameter("facultyId");
-//		    if (facultyIdStr != null && !facultyIdStr.isEmpty()) {
-//		        try {
-//		            int facultyId = Integer.parseInt(facultyIdStr);
-//		            List<MajorVO> deptList = majorService.getDepartmentsByFacultyId(facultyId);
-//		            request.setAttribute("deptList", deptList);
-//		        } catch (NumberFormatException e) {
-//		            System.out.println("잘못된 facultyId: " + facultyIdStr);
-//		        }
-//		    }
 		}
 
 		

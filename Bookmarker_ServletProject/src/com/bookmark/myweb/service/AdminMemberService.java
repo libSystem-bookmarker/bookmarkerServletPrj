@@ -79,6 +79,10 @@ public class AdminMemberService {
 	public List<MemberVO> selectRoleMembers(String role) {
 		return adminMemberDAO.selectRoleMembers(role);
 	}
+	
+	public List<MemberVO> selectMembers(String role, String keyword) {
+	  return adminMemberDAO.findMembers(role, keyword);
+	}
 
 	// 관리자 수정
 	public void updateAdminMember(int userId, String name, String role, String phone, String email, String address, int unitId) {
