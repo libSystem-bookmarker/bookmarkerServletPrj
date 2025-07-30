@@ -36,6 +36,7 @@ public class MemberLoginController implements CommandController {
 			if(loginMember != null) {
 				 request.getSession().setAttribute("loginMember", loginMember);
 				return "redirect:/index.do";
+				
 			} else {
 				return "redirect:/loginForm.do";
 			}

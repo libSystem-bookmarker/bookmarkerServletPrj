@@ -4,21 +4,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="/resources/css/common/common.css">
-<link rel="stylesheet" href="/resources/css/common/loginForm.css"> 
-<link rel="stylesheet" href="/resources/css/common/sideNav.css"> 
-<meta charset="UTF-8">
-<title>BOOKMARK</title>
+    <link rel="stylesheet" href="/resources/css/common/common.css">
+    <link rel="stylesheet" href="/resources/css/common/sideNav.css">
+    <link rel="stylesheet" href="/resources/css/member/profile.css">
+    <link rel="stylesheet" href="/resources/css/member/insertmember.css"> 
+    <meta charset="UTF-8">
+    <title>BOOKMARK</title>
 </head>
 <body>
-<header> <%@ include file="/WEB-INF/views/common/header.jsp" %> </header>
+<header> <jsp:include page="/WEB-INF/views/common/header.jsp"/> </header>
 <main>
-<%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
-<section class="contetnt">
-<h1>회원정보수정</h1>
-</section>
+    <jsp:include page="/WEB-INF/views/common/sidebar.jsp"/>
+    <section id = "main-section" class="content">
+    <p>현재 포함되는 페이지: ${includePage}</p>
+    <c:if test="${not empty includePage}">
+    	<jsp:include page="${includePage}" />
+    </c:if>
+    </section>
 </main>
-<footer> <%@ include file="/WEB-INF/views/common/footer.jsp" %> </footer>
+<footer> <jsp:include page="/WEB-INF/views/common/footer.jsp"/> </footer>
 <script src="/resources/js/common/sidebar.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,38 @@
+h2 {
+  margin-top: 20px;
+  color: #173A6F;
+}
+
+.pw-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 40px auto;
+}
+
+.pw-form input {
+  margin-bottom: 20px;
+  height: 40px;
+  padding-left: 15px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+.pw-form input:focus {
+  outline: none;
+  border: 2px solid #173A6F;
+}
+
+.pw-form button {
+  height: 40px;
+  border: none;
+  background-color: #173A6F;
+  color: white;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.back-link {
+  text-align: center;
+  margin-top: 20px;
+}

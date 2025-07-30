@@ -16,44 +16,45 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.bookmark.myweb.controller.common.ErrorController;
 
-
 /**
  * @author yeonsoo
  * @create 2025.07.04 uri, class 매핑
  */
-@MultipartConfig(  // 이거 추가를 httpServlet을 상속받는 서블릿에 해야한다고 한다..
+@MultipartConfig(
+    maxFileSize = 10 * 1024 * 1024,       // 10MB
+    maxRequestSize = 20 * 1024 * 1024,    // 20MB
+    fileSizeThreshold = 1024              // 1KB
+//@MultipartConfig( // 이거 추가를 httpServlet을 상속받는 서블릿에 해야한다고 한다..
 //	    location = "C:/upload/book",              // 업로드 임시 경로
-	    maxFileSize = 10 * 1024 * 1024,          // 10MB
-	    maxRequestSize = 20 * 1024 * 1024,       // 20MB
-	    fileSizeThreshold = 1024                // 1KB 메모리 버퍼
-	)
+//		maxFileSize = 10 * 1024 * 1024, // 10MB
+//		maxRequestSize = 20 * 1024 * 1024, // 20MB
+//		fileSizeThreshold = 1024 // 1KB 메모리 버퍼
+)
 public class DispatcherServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private Map<String, CommandController> commandControllerMap = new HashMap<>(); // uri, class를 key, value로 저장
+	private Map<String, CommandController> commandControllerMap = new HashMap<>();
 
-	public void init() throws ServletException {// 서블릿 초기화
-
+	@Override
+	public void init() throws ServletException {
 		String configFile = getInitParameter("configFile");
-		Properties prop = new Properties(); // 프로퍼티 객체 생성
-		String configFilePath = getServletContext().getRealPath(configFile); // 설정 파일의 절대 경로
+		Properties prop = new Properties();
+		String configFilePath = getServletContext().getRealPath(configFile);
 
-		try (FileReader reader = new FileReader(configFilePath)) { // 파일에서 스트림을 통해 프로퍼티 읽어
-			prop.load(reader); // 입력 스트림에서 데이터를 읽어 프로퍼티 설정
+		try (FileReader reader = new FileReader(configFilePath)) {
+			prop.load(reader);
 		} catch (IOException e) {
 			throw new ServletException(e);
 		}
 
-		Iterator<?> keys = prop.keySet().iterator(); // 프로퍼티에서 키 집합을 나열 객체로 반환
-		while (keys.hasNext()) { // 키의 개수만큼 실행
-			String uri = (String) keys.next(); // 키 집합에서 uri get
-			String controllerClassName = prop.getProperty(uri); // class name get
+		Iterator<?> keys = prop.keySet().iterator();
+		while (keys.hasNext()) {
+			String uri = (String) keys.next();
+			String controllerClassName = prop.getProperty(uri);
 			try {
-				Class<?> controllerClass = Class.forName(controllerClassName); // 컨트롤러 클래스 이름으로 객체 생성
-				CommandController controllerInterface = (CommandController) controllerClass.getDeclaredConstructor()
-						.newInstance();
-				;
-				commandControllerMap.put(uri, controllerInterface); // 커맨드, 커맨드 객체를 키, 밸류 형식으로 맵에 저장
+				Class<?> controllerClass = Class.forName(controllerClassName);
+				CommandController controllerInstance = (CommandController) controllerClass.getDeclaredConstructor().newInstance();
+				commandControllerMap.put(uri, controllerInstance);
 			} catch (Exception e) {
 				throw new ServletException(e);
 			}
@@ -71,9 +72,19 @@ public class DispatcherServlet extends HttpServlet {
 		}
 
 		String viewPage = null;
+		
+		if (command.equals("/") || command.equals("")) {
+		    response.sendRedirect(request.getContextPath() + "/index.do");
+		    return;
+		}
+
 
 		try {// process는 명령을 처리하고 뷰 페이지 반환
 			viewPage = controller.process(request, response);
+			// DispatcherServlet.java
+			if (viewPage == null)
+				return;
+
 			if ((viewPage != null) && (viewPage.indexOf("redirect:") == 0)) { // 뷰 이름 앞에 리다이렉트가 붙으면 리다이렉트
 				viewPage = viewPage.substring(9); // 9는 redirect의 길이
 				response.sendRedirect(request.getContextPath() + viewPage);
@@ -83,10 +94,12 @@ public class DispatcherServlet extends HttpServlet {
 			throw new ServletException(e);
 		}
 
-		if (viewPage != null) { // 뷰로 포워드
-			viewPage = "/WEB-INF/views/" + viewPage;
-		} else {
-			viewPage = "/WEB-INF/views/index.jsp";
+		if (viewPage != null) {
+			if (!viewPage.startsWith("/WEB-INF/")) {
+				viewPage = "/WEB-INF/views/" + viewPage;
+			} else {
+				viewPage = "/WEB-INF/views/index.jsp";
+			}
 		}
 
 		RequestDispatcher disp = request.getRequestDispatcher(viewPage);
@@ -94,22 +107,15 @@ public class DispatcherServlet extends HttpServlet {
 
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		processServlet(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		processServlet(request, response);
 	}
-
 }
