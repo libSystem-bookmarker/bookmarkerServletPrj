@@ -1,8 +1,9 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
- <h2>회원 목록</h2>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<h1>회원 목록</h1>
   <!-- 필터/검색 영역 -->
-  <form id="filterForm" action="memberInfo.do" method="get">
+  <form class="memberfilterForm" action="memberInfo.do" method="get">
     <input type="hidden" name="tab" value="memberList" />
 
     <label for="role">역할:</label>
@@ -13,14 +14,17 @@
       <option value="student" ${param.role == 'student' ? 'selected' : ''}>학생</option>
     </select>
 
+<div class="buttons">
     <label for="searchKeyword">검색:</label>
-    <input type="text" name="searchKeyword" placeholder="이름, 학과명 등" value="${param.searchKeyword}" />
+    <input type="text"  name="searchKeyword" placeholder="이름, 학과명 등" value="${param.searchKeyword}" />
     
-    <button type="submit">검색</button>
-    <button type="button" onclick="deleteSelected()">선택 삭제</button>
+    <button type="submit" class="searchbtn">검색</button>
+    <button type="button" class="deletebtn" onclick="deleteSelected()">삭제</button>
+  </div>
   </form>
 
   <!-- 회원 목록 테이블 -->
+  <div class="table-memberList">
   <table border="1" class="member-table">
     <thead>
       <tr>
@@ -41,3 +45,4 @@
       </c:forEach>
     </tbody>
   </table>
+  </div>

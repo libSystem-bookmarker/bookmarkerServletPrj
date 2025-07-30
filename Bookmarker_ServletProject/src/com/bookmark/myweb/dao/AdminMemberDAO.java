@@ -328,4 +328,85 @@ public class AdminMemberDAO {
 		}
 		return 0;
 	}
+
+	public int updateMemberInfoByAdmin(int userId, String role, String unitId, String name, String phone, String email, String address) {
+		System.out.println("Dao updateMemberInfoByAdmin 도착");
+		
+		String sql = "UPDATE MEMBER SET ROLE = ?, UNIT_ID = ?, NAME = ?, PHONE_NUMBER = ?, EMAIL = ?, ADDRESS = ? WHERE USER_ID = ?";
+		
+		try (Connection con = dataSource.getConnection();
+		     PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, role);
+			pstmt.setString(2, unitId);
+			pstmt.setString(3, name);
+			pstmt.setString(4, phone);
+			pstmt.setString(5, email);
+			pstmt.setString(6, address);
+			pstmt.setInt(7, userId);
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return 0;
+	}
+
+	public int deleteMember(int userId) {
+		String sql = "DELETE FROM MEMBER WHERE USER_ID = ?";
+	    
+	    try (Connection con = dataSource.getConnection();
+	         PreparedStatement pstmt = con.prepareStatement(sql)) {
+	        pstmt.setInt(1, userId);
+	        return pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+		return 0;
+	}
+
+	public List<MemberVO> findMembers(String role, String keyword) {
+	    List<MemberVO> list = new ArrayList<>();
+	    Connection con = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+
+	    try {
+	    	con = dataSource.getConnection();
+
+	        StringBuilder sql = new StringBuilder("SELECT * FROM MEMBER WHERE 1=1");
+
+	        if (role != null && !role.isEmpty()) {
+	            sql.append(" AND role = ?");
+	        }
+	        if (keyword != null && !keyword.isEmpty()) {
+	            sql.append(" AND (name LIKE ? OR email LIKE ?)");
+	        }
+
+	        pstmt = con.prepareStatement(sql.toString());
+
+	        int index = 1;
+	        if (role != null && !role.isEmpty()) {
+	            pstmt.setString(index++, role);
+	        }
+	        if (keyword != null && !keyword.isEmpty()) {
+	            String like = "%" + keyword + "%";
+	            pstmt.setString(index++, like);
+	            pstmt.setString(index++, like);
+	        }
+
+	        rs = pstmt.executeQuery();
+	        while (rs.next()) {
+	            MemberVO m = new MemberVO();
+	            m.setUserId(rs.getInt("user_id"));
+	            m.setName(rs.getString("name"));
+	            m.setRole(rs.getString("role"));
+	            m.setEmail(rs.getString("email"));
+	            list.add(m);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return list;
+	}
+
 }

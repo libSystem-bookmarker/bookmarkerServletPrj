@@ -1,21 +1,64 @@
+ h1 {
+    color: #173A6F; /* 헤더색 */
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+button {
+	margin-top: 30px;
+	margin-bottom: 30px;
+	width: 100px;
+	height: 30px;
+}
+
+.searchbtn {
+	background: #173A6F;
+	color: #fafafa;
+}
+
+.searchbth:hover {
+	background-color: #3C5475; /* hover 시 푸터 색상 */
+}
+
 .member-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
+  min-width: 1000px;
+  font-size: 14px;
+  margin-top: 16px;
 }
 
 .member-table th,
 .member-table td {
-  padding: 8px 12px;
-  border: 1px solid #ccc;
+  padding: 12px 16px;
   text-align: center;
+  white-space: nowrap;
 }
 
-#filterForm {
-  margin-bottom: 15px;
+.member-table thead {
+  background-color: #f3f4f6;
+  font-weight: bold;
 }
 
-#filterForm input[type="text"] {
-  width: 200px;
-  padding: 5px;
+.member-table tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.member-table tbody tr:hover {
+  background-color: #f3f4f6;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.member-table input[type="checkbox"] {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.member-table a {
+  color: #173A6F;
+  font-weight: bold;
+  text-decoration: none;
+}
+.member-table a:hover {
+  text-decoration: underline;
 }

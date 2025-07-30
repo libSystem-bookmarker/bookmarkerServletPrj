@@ -37,7 +37,7 @@ public class MemberInsertPostController implements CommandController {
 		boolean result = adminMemberService.insertMember(member);
 
 		if (result) {
-		    return "redirect:/index.do";
+		    return "redirect:/myPage.do";
 		} else {
 		   return "redirect:/insertMemberForm.do?error=fail"; // 다시 입력 폼
 
