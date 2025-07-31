@@ -3,7 +3,6 @@
 Java Servlet과 JSP를 기반으로 구축된 대학 도서관 웹 시스템입니다.  
 도서 대출, 회원 관리, 공지사항 게시판 등 도서관의 핵심 기능을 포함하고 있으며, 관리자/사서/학생 별 역할 기반 접근 제어를 지원합니다.
 
----
 
 ## 🔧 기술 스택
 
@@ -16,7 +15,7 @@ Java Servlet과 JSP를 기반으로 구축된 대학 도서관 웹 시스템입�
 | Build Tool | Apache Tomcat 9 |
 | 기타 | JSTL, EL, AJAX, MVC 패턴 구조 |
 
----
+
 
 ## 🧩 주요 기능
 
@@ -41,7 +40,7 @@ Java Servlet과 JSP를 기반으로 구축된 대학 도서관 웹 시스템입�
 - 공지사항 열람
 - 대출 통계 확인
 
----
+
 
 ## 📁 프로젝트 구조
 bookmarkerServletPrj/
@@ -58,7 +57,7 @@ bookmarkerServletPrj/
 └── command.properties # URI - Controller 매핑
 
 
----
+
 
 ## ⚙️ DB 기본 테이블
 
@@ -67,7 +66,7 @@ bookmarkerServletPrj/
 - `NOTICE` : 공지사항 (향후 확장 예정)
 - `BOOK`, `BORROW`
 
----
+
 
 ## 🙋‍♀️ 개발자
 
@@ -75,7 +74,7 @@ bookmarkerServletPrj/
 |------|------|
 | 김연수 | 백엔드 개발, 설계, 전체 구조 구현 |
 
----
+
 
 ## 📌 향후 개선 사항
 
